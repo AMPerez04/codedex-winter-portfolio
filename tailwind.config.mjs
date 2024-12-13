@@ -1,5 +1,4 @@
-import type { Config } from "tailwindcss";
-
+/** @type {import('tailwindcss').Config} */
 export default {
   content: [
     "./pages/**/*.{js,ts,jsx,tsx,mdx}",
@@ -11,11 +10,8 @@ export default {
       colors: {
         background: "var(--background)",
         foreground: "var(--foreground)",
-        neonGreen: "#39ff14",
-        pastelPink: "#ffb6c1",
-        retroBlue: "#89cff0",
       },
     },
   },
   plugins: [],
-} satisfies Config;
+};
