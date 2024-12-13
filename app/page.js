@@ -11,7 +11,7 @@ gsap.registerPlugin(TextPlugin);
 
 export default function Home() {
   const toggleRef = useRef(null);
-  const html = document.documentElement;
+  
   const [isDarkMode, setIsDarkMode] = useState(true); // Add state to track the current theme
   const landingTextRef = useRef(null);
   const [colors, setColors] = useState({
@@ -21,6 +21,7 @@ export default function Home() {
 
   useEffect(() => {
     // Set initial theme
+    const html = document.documentElement;
     if (!html.classList.contains('dark') && !html.classList.contains('light')) {
       html.classList.add('dark');
     }
