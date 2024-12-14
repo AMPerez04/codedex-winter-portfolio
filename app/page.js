@@ -6,6 +6,7 @@ import { BsFillSunFill, BsFillMoonFill } from 'react-icons/bs';
 import { gsap } from 'gsap';
 import { TextPlugin } from 'gsap/TextPlugin';
 import LandingAnimation from './LandingAnimation'; // Import the component
+import Head from 'next/head';
 
 gsap.registerPlugin(TextPlugin);
 
@@ -100,38 +101,40 @@ export default function Home() {
   };
 // transition-colors duration-300 ease-in-out
   return (
+    
     <div className="min-h-screen flex flex-col bg-[var(--color-bg)] text-[var(--color-text)]  font-mono tracking-wider">
-      <header className="site-header flex items-center justify-between p-4 border-b border-[var(--color-fg)] ">
+
+      <header className="site-header flex items-center justify-between p-4  border-b border-[var(--color-fg)] " style={{height: '6vh' }}>
         {/* Left side: Logo */}
-        <div className="logo border border-[var(--color-fg)] p-2 leading-none select-none " title="AP">
-          <span className="text-2xl font-bold" style={{ fontFamily: 'monospace' }}>
-            AUSITN PEREZ
+        <div className="logo px-4 leading-none select-none " title="AP">
+          <span className="text-4xl font-bold" style={{ fontFamily: 'monospace' }}>
+            AUSTIN PEREZ
           </span>
         </div>
 
         {/* Right side: Navigation and icons */}
-        <div className="flex items-center gap-4">
-          <nav className="flex items-center gap-2">
+        <div className="flex items-center gap-0">
+          <nav className="flex items-center gap-0">
             <button
-              className="hover:bg-[var(--color-fg)] hover:text-[var(--color-bg)] px-2 py-1 border border-[var(--color-fg)] text-sm"
+              className="hover:bg-[var(--color-fg)] hover:text-[var(--color-bg)] px-5 py-4  text-2xl"
               onClick={() => scrollToSection('about')}
             >
               About
             </button>
             <button
-              className="hover:bg-[var(--color-fg)] hover:text-[var(--color-bg)] px-2 py-1 border border-[var(--color-fg)] text-sm"
+              className="hover:bg-[var(--color-fg)] hover:text-[var(--color-bg)] px-5 py-4  text-2xl"
               onClick={() => scrollToSection('work')}
             >
               Work
             </button>
             <button
-              className="hover:bg-[var(--color-fg)] hover:text-[var(--color-bg)] px-2 py-1 border border-[var(--color-fg)] text-sm"
+              className="hover:bg-[var(--color-fg)] hover:text-[var(--color-bg)] px-5 py-4  text-2xl"
               onClick={() => scrollToSection('contact')}
             >
               Contact
             </button>
             <button
-              className="hover:bg-[var(--color-fg)] hover:text-[var(--color-bg)] px-2 py-1 border border-[var(--color-fg)] text-sm"
+              className="hover:bg-[var(--color-fg)] hover:text-[var(--color-bg)] px-5 py-4  text-2xl"
               onClick={() => scrollToSection('extras')}
             >
               Extras
@@ -143,7 +146,7 @@ export default function Home() {
             href="https://github.com/AMPerez04"
             target="_blank"
             rel="noopener noreferrer"
-            className="text-xl text-[var(--color-text)] hover:text-[var(--color-fg)]"
+            className="text-xl text-[var(--color-text)] hover:bg-[var(--color-fg)] hover:text-[var(--color-bg)] px-5 py-5 h-full"
             title="GitHub"
           >
             <FaGithub />
@@ -154,7 +157,7 @@ export default function Home() {
             href="https://www.linkedin.com/in/austin-m-perez/"
             target="_blank"
             rel="noopener noreferrer"
-            className="text-xl text-[var(--color-text)] hover:text-[var(--color-fg)]"
+            className="text-xl text-[var(--color-text)] hover:bg-[var(--color-fg)] hover:text-[var(--color-bg)] px-5 py-5 h-full"
             title="LinkedIn"
           >
             <FaLinkedin />
@@ -163,7 +166,7 @@ export default function Home() {
           {/* Theme Toggle */}
           <button
             ref={toggleRef}
-            className="header-toggle hover:bg-[var(--color-fg)] hover:text-[var(--color-bg)] px-2 py-1 border border-[var(--color-fg)] text-sm"
+            className="header-toggle hover:bg-[var(--color-fg)] hover:text-[var(--color-bg)] px-5 py-5 text-xl h-full"
             title="Toggle Theme"
           >
             {isDarkMode ? <BsFillMoonFill /> : <BsFillSunFill />}

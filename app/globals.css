@@ -64,10 +64,15 @@ body {
   background: var(--color-bg);
   color: var(--color-fg);
   border-bottom: 1px solid var(--color-fg);
-  padding: 1rem;
+  padding: 0rem;
   display: flex;
   align-items: center;
   justify-content: space-between;
+}
+
+/* For WebKit browsers (Chrome, Safari, Edge) */
+body::-webkit-scrollbar {
+  display: none;
 }
 
 .logo {
@@ -79,10 +84,7 @@ body {
 
 .header-toggle {
   background: none;
-  border: 1px solid var(--color-fg);
   color: var(--color-fg);
-  padding: 0.5rem;
-  font-size: 0.75rem;
   cursor: pointer;
   transition: background 0.3s ease, color 0.3s ease;
 }
