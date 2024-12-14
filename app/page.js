@@ -8,6 +8,9 @@ import { TextPlugin } from 'gsap/TextPlugin';
 import LandingAnimation from './LandingAnimation'; // Import the component
 import Head from 'next/head';
 import AboutSection from './AboutSection';
+import WorkSection from './WorkSection';
+import ExtraSection from './ExtraSection';
+import ContactSection from './ContactSection';
 
 gsap.registerPlugin(TextPlugin);
 
@@ -117,7 +120,7 @@ export default function Home() {
         <div className="flex items-center gap-0 h-full">
           <nav className="flex items-center gap-0 h-full">
             <button
-              className="hover:bg-[var(--color-fg)] hover:text-[var(--color-bg)] px-5   text-2xl h-full"
+              className="hover:bg-[var(--color-fg)] hover:text-[var(--color-bg)] px-5   text-2xl h-full "
               onClick={() => scrollToSection('about')}
             >
               About
@@ -191,8 +194,7 @@ export default function Home() {
         {/* Centered Heading */}
         <h1
           ref={landingTextRef}
-          className="absolute text-5xl md:text-7xl lg:text-8xl font-bold text-center tracking-wide uppercase text-[var(--color-text)]"
-        >
+          className="absolute text-5xl md:text-7xl lg:text-8xl font-bold text-center tracking-wide uppercase text-[var(--color-text)" >
 
         </h1>
       </section>
@@ -211,7 +213,6 @@ export default function Home() {
             accentColor={colors.accentColor}
           />
         </div>
-        {/* Your About Content */}
         <div className="absolute text-center text-[var(--color-text)] bg-[var(--color-bg)] p-8 border border-[var(--color-fg)]  shadow-md" style={{maxWidth: '30vw'}}>
           <h2 className="text-5xl md:text-7xl font-bold uppercase mb-4">About</h2>
           <p className="text-xl md:text-2xl text-justify">
@@ -225,37 +226,61 @@ export default function Home() {
       </section>
 
 
-        <section id="work" className="site-section">
-          <h2 className="section-title">Work</h2>
+        <section id="work" className="relative flex flex-col items-center justify-center border-b border-[var(--color-fg)]">
+        <div className="w-full h-full">
+          <WorkSection
+            primaryColor={colors.primaryColor}
+            accentColor={colors.accentColor}
+          />
+        </div>
+        <div className="absolute text-center text-[var(--color-text)] bg-[var(--color-bg)] p-8 border border-[var(--color-fg)]  shadow-md" style={{maxWidth: '30vw'}}>
+          <h2 className="text-5xl md:text-7xl font-bold uppercase mb-4">Work</h2>
           <p className="max-w-prose mx-auto my-4 text-justify">
             My professional journey spans a variety of projects across web and mobile development, highlighting my ability to adapt to new challenges and deliver results. Whether building intuitive applications, scaling infrastructure for startups, or creating innovative user experiences, I bring technical expertise and a problem-solving mindset to every project.
           </p>
           <p className="max-w-prose mx-auto my-4 text-justify">
             Alongside my professional work, I actively explore game development and modding, which fuels my creativity and hones my technical skills. These side projects reflect my commitment to learning and experimenting with cutting-edge technologies.
           </p>
+        </div>
         </section>
 
-        <section id="contact" className="site-section">
-          <h2 className="section-title">Contact</h2>
+        <section id="contact" className="relative flex flex-col items-center justify-center border-b border-[var(--color-fg)]">
+        <div className="w-full h-full">
+          <ContactSection
+            primaryColor={colors.primaryColor}
+            accentColor={colors.accentColor}
+          />
+        </div>
+        <div className="absolute text-center text-[var(--color-text)] bg-[var(--color-bg)] p-8 border border-[var(--color-fg)]  shadow-md" style={{maxWidth: '30vw'}}>
+          <h2 className="text-5xl md:text-7xl font-bold uppercase mb-4">Contact Me</h2>
           <p className="max-w-prose mx-auto my-4 text-justify">
             I’m always open to connecting with like-minded professionals, collaborating on impactful projects, or discussing exciting opportunities. Let’s create something extraordinary together.
           </p>
           <p className="max-w-prose mx-auto my-4 text-justify">
-            Email: <a href="mailto:austin@example.com" className="underline">austin@example.com</a>
+            Email: <a href="mailto:austin@example.com" className="underline">austinp0502@gmail.com</a>
           </p>
           <p className="max-w-prose mx-auto my-4 text-justify">
             Or send me a message on <a href="https://linkedin.com/in/austin-m-perez" className="underline">LinkedIn</a>.
           </p>
+        </div>
         </section>
 
-        <section id="extras" className="site-section">
-          <h2 className="section-title">Extras</h2>
+        <section id="extras" className="relative flex flex-col items-center justify-center border-b border-[var(--color-fg)]">
+        <div className="w-full h-full">
+          <ExtraSection
+            primaryColor={colors.primaryColor}
+            accentColor={colors.accentColor}
+          />
+        </div>
+        <div className="absolute text-center text-[var(--color-text)] bg-[var(--color-bg)] p-8 border border-[var(--color-fg)]  shadow-md" style={{maxWidth: '30vw'}}>
+          <h2 className="text-5xl md:text-7xl font-bold uppercase mb-4">Extras</h2>
           <p className="max-w-prose mx-auto my-4 text-justify">
             Beyond client work, I’ve delved into game development and modding, which allows me to combine technical rigor with creative expression. These projects not only refine my programming skills but also demonstrate my ability to work on complex, highly engaging systems.
           </p>
           <p className="max-w-prose mx-auto my-4 text-justify">
             Take a look at my <a href="https://github.com/AMPerez04" className="underline">GitHub</a> to explore my experiments, or check out my <a href="https://linkedin.com/in/austin-m-perez" className="underline">LinkedIn</a> for more about my professional journey.
           </p>
+        </div>
         </section>
       </main>
 

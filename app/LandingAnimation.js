@@ -23,7 +23,7 @@ export default function LandingAnimation({ primaryColor = "#000000", accentColor
     uniform float u_offsetBase;
   
     const float PI = 3.141592653589793;
-    const float ANGLE = PI / 3.65; // 45 degrees in radians
+    const float ANGLE = PI / 3.40; // 45 degrees in radians
   
     void main() {
       float frequency = 60.0 + sin(u_time) * 3.0; // Modulate frequency over time

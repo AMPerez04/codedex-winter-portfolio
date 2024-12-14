@@ -1,7 +1,7 @@
-// src/components/AboutSection.jsx
+// src/components/InteractiveParticles.jsx
 import React, { useRef, useEffect } from "react";
 
-export default function AboutSection({ primaryColor = "#000000", accentColor = "#FF0000" }) {
+export default function WorkSection() {
   const canvasRef = useRef(null);
   const animationRef = useRef(null);
 
@@ -26,50 +26,42 @@ export default function AboutSection({ primaryColor = "#000000", accentColor = "
     // Vertex Shader
     const vertexShaderSource = `
       attribute vec2 a_position;
-      attribute float a_index; // Index for each triangle
-      varying float v_index; // Pass index to fragment shader
+      attribute float a_lifetime;
+      varying float v_lifetime;
       uniform float u_time;
+      uniform vec2 u_mouse;
       uniform vec2 u_resolution;
 
       void main() {
-        v_index = a_index; // Pass index to fragment shader
+        v_lifetime = mod(u_time + a_lifetime, 1.0); // Create pulsating effect
 
-        // Convert position from pixels to clip space
-        vec2 zeroToOne = a_position / u_resolution;
+        // Map lifetime to alpha for fade-in/fade-out
+        float alpha = v_lifetime < 0.5 ? v_lifetime * 2.0 : (1.0 - v_lifetime) * 2.0;
+
+        // Add motion based on lifetime and mouse proximity
+        vec2 offset = normalize(u_mouse - a_position) * (1.0 - v_lifetime) * 20.0;
+
+        vec2 position = a_position + offset * alpha;
+        vec2 zeroToOne = position / u_resolution;
         vec2 zeroToTwo = zeroToOne * 2.0;
         vec2 clipSpace = zeroToTwo - 1.0;
 
-        // Apply time-based animation
-        float angle = u_time + a_position.x * 0.001;
-        float displacement = sin(angle) * 50.0;
-
-        vec2 position = vec2(a_position.x, a_position.y + displacement);
-        zeroToOne = position / u_resolution;
-        zeroToTwo = zeroToOne * 2.0;
-        clipSpace = zeroToTwo - 1.0;
-
         gl_Position = vec4(clipSpace * vec2(1, -1), 0, 1);
+        gl_PointSize = 5.0 * (1.0 - alpha); // Vary point size by lifetime
       }
     `;
 
     // Fragment Shader
     const fragmentShaderSource = `
       precision highp float;
-      varying float v_index; // Index from vertex shader
-      uniform float u_time;
+      varying float v_lifetime;
       uniform vec3 u_primaryColor;
       uniform vec3 u_accentColor;
 
       void main() {
-        // Calculate a unique offset for each triangle based on its index
-        float offset = mod(v_index, 10.0) * 0.1;
-
-        // Smoothly blend colors with offset
-        float blendFactor = mod(u_time + offset, 1.5) - 1.0;
-        blendFactor = abs(blendFactor);
-
-        vec3 color = mix(u_primaryColor, u_accentColor, blendFactor);
-        gl_FragColor = vec4(color, 1.0);
+        float alpha = v_lifetime < 0.5 ? v_lifetime * 2.0 : (1.0 - v_lifetime) * 2.0;
+        vec3 color = mix(u_primaryColor, u_accentColor, v_lifetime);
+        gl_FragColor = vec4(color, alpha);
       }
     `;
 
@@ -89,11 +81,7 @@ export default function AboutSection({ primaryColor = "#000000", accentColor = "
     };
 
     const vertexShader = compileShader(gl, gl.VERTEX_SHADER, vertexShaderSource);
-    const fragmentShader = compileShader(
-      gl,
-      gl.FRAGMENT_SHADER,
-      fragmentShaderSource
-    );
+    const fragmentShader = compileShader(gl, gl.FRAGMENT_SHADER, fragmentShaderSource);
 
     // Link program
     const program = gl.createProgram();
@@ -111,60 +99,42 @@ export default function AboutSection({ primaryColor = "#000000", accentColor = "
 
     // Attribute and uniform locations
     const positionLocation = gl.getAttribLocation(program, "a_position");
-    const indexLocation = gl.getAttribLocation(program, "a_index");
+    const lifetimeLocation = gl.getAttribLocation(program, "a_lifetime");
     const timeLocation = gl.getUniformLocation(program, "u_time");
     const resolutionLocation = gl.getUniformLocation(program, "u_resolution");
+    const mouseLocation = gl.getUniformLocation(program, "u_mouse");
     const primaryColorLocation = gl.getUniformLocation(program, "u_primaryColor");
     const accentColorLocation = gl.getUniformLocation(program, "u_accentColor");
 
-    // Generate triangles
-    const numTriangles = 200;
+    // Generate particles
+    const numParticles = 10000;
     const positions = [];
-    const indices = [];
+    const lifetimes = [];
 
-    for (let i = 0; i < numTriangles; i++) {
-      const x = Math.random() * gl.canvas.width;
-      const y = Math.random() * gl.canvas.height;
-      const size = Math.random() * 50 + 20;
-
-      // Triangle vertices
-      positions.push(
-        x, y,
-        x + size, y,
-        x + size / 2, y + size
-      );
-
-      // Index for each vertex of the triangle
-      indices.push(i, i, i);
+    for (let i = 0; i < numParticles; i++) {
+      positions.push(Math.random() * gl.canvas.width, Math.random() * gl.canvas.height);
+      lifetimes.push(Math.random());
     }
 
     // Position buffer
     const positionBuffer = gl.createBuffer();
     gl.bindBuffer(gl.ARRAY_BUFFER, positionBuffer);
-    gl.bufferData(
-      gl.ARRAY_BUFFER,
-      new Float32Array(positions),
-      gl.STATIC_DRAW
-    );
+    gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(positions), gl.STATIC_DRAW);
 
-    // Index buffer
-    const indexBuffer = gl.createBuffer();
-    gl.bindBuffer(gl.ARRAY_BUFFER, indexBuffer);
-    gl.bufferData(
-      gl.ARRAY_BUFFER,
-      new Float32Array(indices),
-      gl.STATIC_DRAW
-    );
+    // Lifetime buffer
+    const lifetimeBuffer = gl.createBuffer();
+    gl.bindBuffer(gl.ARRAY_BUFFER, lifetimeBuffer);
+    gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(lifetimes), gl.STATIC_DRAW);
 
     // Enable position attribute
     gl.enableVertexAttribArray(positionLocation);
     gl.bindBuffer(gl.ARRAY_BUFFER, positionBuffer);
     gl.vertexAttribPointer(positionLocation, 2, gl.FLOAT, false, 0, 0);
 
-    // Enable index attribute
-    gl.enableVertexAttribArray(indexLocation);
-    gl.bindBuffer(gl.ARRAY_BUFFER, indexBuffer);
-    gl.vertexAttribPointer(indexLocation, 1, gl.FLOAT, false, 0, 0);
+    // Enable lifetime attribute
+    gl.enableVertexAttribArray(lifetimeLocation);
+    gl.bindBuffer(gl.ARRAY_BUFFER, lifetimeBuffer);
+    gl.vertexAttribPointer(lifetimeLocation, 1, gl.FLOAT, false, 0, 0);
 
     // Convert hex color to RGB
     const hexToRgb = (hex) => {
@@ -175,12 +145,23 @@ export default function AboutSection({ primaryColor = "#000000", accentColor = "
       return [r, g, b];
     };
 
-    // Use primaryColor and accentColor from props
+    const root = document.documentElement;
+    const primaryColor = getComputedStyle(root).getPropertyValue("--primary-color").trim();
+    const accentColor = getComputedStyle(root).getPropertyValue("--accent-color").trim();
+
     const [rPrimary, gPrimary, bPrimary] = hexToRgb(primaryColor);
     const [rAccent, gAccent, bAccent] = hexToRgb(accentColor);
 
     gl.uniform3f(primaryColorLocation, rPrimary, gPrimary, bPrimary);
     gl.uniform3f(accentColorLocation, rAccent, gAccent, bAccent);
+
+    // Track mouse position
+    const mousePosition = { x: 0, y: 0 };
+    window.addEventListener("mousemove", (event) => {
+      const rect = canvas.getBoundingClientRect();
+      mousePosition.x = event.clientX - rect.left;
+      mousePosition.y = gl.canvas.height - (event.clientY - rect.top);
+    });
 
     // Animation loop
     let startTime = null;
@@ -202,9 +183,10 @@ export default function AboutSection({ primaryColor = "#000000", accentColor = "
       // Update uniforms
       gl.uniform1f(timeLocation, elapsedTime);
       gl.uniform2f(resolutionLocation, gl.canvas.width, gl.canvas.height);
+      gl.uniform2f(mouseLocation, mousePosition.x, mousePosition.y);
 
-      // Draw triangles
-      gl.drawArrays(gl.TRIANGLES, 0, positions.length / 2);
+      // Draw particles
+      gl.drawArrays(gl.POINTS, 0, numParticles);
 
       animationRef.current = requestAnimationFrame(render);
     };
@@ -218,9 +200,9 @@ export default function AboutSection({ primaryColor = "#000000", accentColor = "
       gl.deleteShader(vertexShader);
       gl.deleteShader(fragmentShader);
       gl.deleteBuffer(positionBuffer);
-      gl.deleteBuffer(indexBuffer);
+      gl.deleteBuffer(lifetimeBuffer);
     };
-  }, [primaryColor, accentColor]); // Added dependencies
+  }, []);
 
   return (
     <div style={{ width: "100vw", height: "100vh", display: "flex", justifyContent: "center", alignItems: "center" }}>
