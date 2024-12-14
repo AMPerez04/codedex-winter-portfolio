@@ -79,7 +79,6 @@ body::-webkit-scrollbar {
   display: inline-block;
   text-align: center;
   font-size: 1rem;
-  background: var(--color-bg);
 }
 
 .header-toggle {

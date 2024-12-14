@@ -106,10 +106,10 @@ export default function Home() {
 
       <header className="site-header flex items-center justify-between p-4  border-b border-[var(--color-fg)] " style={{height: '6vh' }}>
         {/* Left side: Logo */}
-        <div className="logo px-4 leading-none select-none " title="AP">
-          <span className="text-4xl font-bold" style={{ fontFamily: 'monospace' }}>
+        <div className="logo" title="AP">
+          <button className="text-4xl font-bold px-5 py-4 hover:bg-[var(--color-fg)] hover:text-[var(--color-bg)]" style={{ fontFamily: 'monospace' }} >
             AUSTIN PEREZ
-          </span>
+          </button>
         </div>
 
         {/* Right side: Navigation and icons */}
