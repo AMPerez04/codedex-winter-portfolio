@@ -7,6 +7,7 @@ import { gsap } from 'gsap';
 import { TextPlugin } from 'gsap/TextPlugin';
 import LandingAnimation from './LandingAnimation'; // Import the component
 import Head from 'next/head';
+import AboutSection from './AboutSection';
 
 gsap.registerPlugin(TextPlugin);
 
@@ -104,37 +105,37 @@ export default function Home() {
     
     <div className="min-h-screen flex flex-col bg-[var(--color-bg)] text-[var(--color-text)]  font-mono tracking-wider">
 
-      <header className="site-header flex items-center justify-between p-4  border-b border-[var(--color-fg)] " style={{height: '6vh' }}>
+      <header className="fixed top-0 left-0 w-full z-50 flex items-center justify-between bg-[var(--color-bg)] border-b border-[var(--color-fg)] shadow-lg" style={{height: '6vh' }}>
         {/* Left side: Logo */}
-        <div className="logo" title="AP">
-          <button className="text-4xl font-bold px-5 py-4 hover:bg-[var(--color-fg)] hover:text-[var(--color-bg)]" style={{ fontFamily: 'monospace' }} >
+        <div className="logo h-full" title="AP">
+          <button className="text-4xl font-bold px-5 h-full hover:bg-[var(--color-fg)] hover:text-[var(--color-bg)]" style={{ fontFamily: 'monospace' }} onClick={() => scrollToSection('landing')}>
             AUSTIN PEREZ
           </button>
         </div>
 
         {/* Right side: Navigation and icons */}
-        <div className="flex items-center gap-0">
-          <nav className="flex items-center gap-0">
+        <div className="flex items-center gap-0 h-full">
+          <nav className="flex items-center gap-0 h-full">
             <button
-              className="hover:bg-[var(--color-fg)] hover:text-[var(--color-bg)] px-5 py-4  text-2xl"
+              className="hover:bg-[var(--color-fg)] hover:text-[var(--color-bg)] px-5   text-2xl h-full"
               onClick={() => scrollToSection('about')}
             >
               About
             </button>
             <button
-              className="hover:bg-[var(--color-fg)] hover:text-[var(--color-bg)] px-5 py-4  text-2xl"
+              className="hover:bg-[var(--color-fg)] hover:text-[var(--color-bg)] px-5   text-2xl h-full"
               onClick={() => scrollToSection('work')}
             >
               Work
             </button>
             <button
-              className="hover:bg-[var(--color-fg)] hover:text-[var(--color-bg)] px-5 py-4  text-2xl"
+              className="hover:bg-[var(--color-fg)] hover:text-[var(--color-bg)] px-5   text-2xl h-full"
               onClick={() => scrollToSection('contact')}
             >
               Contact
             </button>
             <button
-              className="hover:bg-[var(--color-fg)] hover:text-[var(--color-bg)] px-5 py-4  text-2xl"
+              className="hover:bg-[var(--color-fg)] hover:text-[var(--color-bg)] px-5  text-2xl h-full"
               onClick={() => scrollToSection('extras')}
             >
               Extras
@@ -199,12 +200,30 @@ export default function Home() {
 
       <main className="site-main flex-1">
 
-        <section id="about" className="site-section">
-          <h2 className="section-title">About</h2>
-          <p className="max-w-prose mx-auto my-4 text-justify">
-            Welcome! I'm Austin Perez, a versatile developer with over four years of freelance experience, a proven track record working with startups, and the entrepreneurial drive to launch my own successful venture. My passion lies at the intersection of creativity and technology, where I craft solutions that make a real impact.
+      <section
+      id="about"
+      className="relative flex flex-col items-center justify-center border-b border-[var(--color-fg)]"
+      >
+  
+        <div className="w-full h-full">
+          <AboutSection
+            primaryColor={colors.primaryColor}
+            accentColor={colors.accentColor}
+          />
+        </div>
+        {/* Your About Content */}
+        <div className="absolute text-center text-[var(--color-text)] bg-[var(--color-bg)] p-8 border border-[var(--color-fg)]  shadow-md" style={{maxWidth: '30vw'}}>
+          <h2 className="text-5xl md:text-7xl font-bold uppercase mb-4">About</h2>
+          <p className="text-xl md:text-2xl text-justify">
+            Welcome! I'm Austin Perez, a versatile developer with over four years
+            of freelance experience, a proven track record working with startups,
+            and the entrepreneurial drive to launch my own successful venture.
+            My passion lies at the intersection of creativity and technology,
+            where I craft solutions that make a real impact.
           </p>
-        </section>
+        </div>
+      </section>
+
 
         <section id="work" className="site-section">
           <h2 className="section-title">Work</h2>

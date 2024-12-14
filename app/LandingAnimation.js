@@ -159,7 +159,7 @@ export default function LandingAnimation({ primaryColor = "#000000", accentColor
   }, [primaryColor, accentColor]);
 
   return (
-    <div style={{ width: "100vw", height: "94vh", display: "flex", justifyContent: "center", alignItems: "center" }}>
+    <div style={{ width: "100vw", height: "100vh", display: "flex", justifyContent: "center", alignItems: "center" }}>
       <canvas ref={canvasRef} style={{ width: "100%", height: "100%" }} />
     </div>
   );

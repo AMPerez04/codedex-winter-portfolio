@@ -127,3 +127,49 @@ a {
 a:hover {
   color: var(--color-fg);
 }
+.s-about {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  background-color: var(--color-bg);
+}
+
+.s-inner {
+  position: relative;
+  z-index: 2;
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 2rem;
+  text-align: center;
+}
+
+.section-title {
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+}
+
+.about-content {
+  font-size: 1.2rem;
+  line-height: 1.8;
+  text-align: justify;
+}
+
+/* Grid styling */
+.s-grid {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  transform: translateZ(-500px) rotateX(30deg) rotateY(0deg);
+  perspective: 800px;
+  z-index: 1;
+  stroke: var(--color-grid); /* Use CSS variable or a color for the grid lines */
+}
+
+.s-grid line {
+  stroke-width: 1;
+  stroke-dasharray: 2;
+  stroke-opacity: 0.5;
+}
