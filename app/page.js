@@ -111,7 +111,7 @@ export default function Home() {
       <header className="fixed top-0 left-0 w-full z-50 flex items-center justify-between bg-[var(--color-bg)] border-b border-[var(--color-fg)] shadow-lg" style={{ height: '6vh' }}>
         {/* Left side: Logo */}
         <div className="logo h-full">
-          <button className="text-2xl md:text-3xl lg:text-4xl font-bold px-5 h-full hover:bg-[var(--color-fg)] hover:text-[var(--color-bg)] whitespace-nowrap overflow-x-auto" style={{ fontFamily: 'monospace' }} onClick={() => scrollToSection('landing')}>
+          <button className="text-2xl md:text-3xl lg:text-4xl font-bold px-5 h-full hover:bg-[var(--color-fg)] hover:text-[var(--color-bg)] whitespace-nowrap overflow-x-auto" onClick={() => scrollToSection('landing')}>
             AUSTIN PEREZ
           </button>
         </div>
