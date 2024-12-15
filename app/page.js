@@ -16,7 +16,7 @@ gsap.registerPlugin(TextPlugin);
 
 export default function Home() {
   const toggleRef = useRef(null);
-  
+
   const [isDarkMode, setIsDarkMode] = useState(true); // Add state to track the current theme
   const landingTextRef = useRef(null);
   const [colors, setColors] = useState({
@@ -103,12 +103,12 @@ export default function Home() {
       el.scrollIntoView({ behavior: 'smooth' });
     }
   };
-// transition-colors duration-300 ease-in-out
+  // transition-colors duration-300 ease-in-out
   return (
-    
+
     <div className="min-h-screen flex flex-col bg-[var(--color-bg)] text-[var(--color-text)]  font-mono tracking-wider">
 
-      <header className="fixed top-0 left-0 w-full z-50 flex items-center justify-between bg-[var(--color-bg)] border-b border-[var(--color-fg)] shadow-lg" style={{height: '6vh' }}>
+      <header className="fixed top-0 left-0 w-full z-50 flex items-center justify-between bg-[var(--color-bg)] border-b border-[var(--color-fg)] shadow-lg" style={{ height: '6vh' }}>
         {/* Left side: Logo */}
         <div className="logo h-full">
           <button className="text-2xl md:text-3xl lg:text-4xl font-bold px-5 h-full hover:bg-[var(--color-fg)] hover:text-[var(--color-bg)] whitespace-nowrap overflow-x-auto" style={{ fontFamily: 'monospace' }} onClick={() => scrollToSection('landing')}>
@@ -202,87 +202,127 @@ export default function Home() {
 
       <main className="site-main flex-1">
 
-      <section
-      id="about"
-      className="relative flex flex-col items-center justify-center border-b border-[var(--color-fg)]"
-      >
-  
-        <div className="w-full h-full">
-          <AboutSection
-            primaryColor={colors.primaryColor}
-            accentColor={colors.accentColor}
-          />
-        </div>
-        <div className="absolute text-center text-[var(--color-text)] bg-[var(--color-bg)] p-8 border border-[var(--color-fg)]  shadow-md" style={{maxWidth: '90vw'}}>
-          <h2 className="text-3xl sm:text-5xl md:text-7xl font-bold uppercase mb-4">About</h2>
-          <p className="max-w-prose mx-auto my-4 text-justify">
-            Welcome! I'm Austin Perez, a versatile developer with over four years
-            of freelance experience, a proven track record working with startups,
-            and the entrepreneurial drive to launch my own successful venture.
-          </p>
-          <p className="max-w-prose mx-auto my-4 text-justify">
-            My passion lies at the intersection of creativity and technology,
-            where I craft solutions that make a real impact.
-          </p>
-        </div>
-      </section>
+        <section
+          id="about"
+          className="relative flex flex-col items-center justify-center border-b border-[var(--color-fg)]"
+        >
+
+          <div className="w-full h-full">
+            <AboutSection
+              primaryColor={colors.primaryColor}
+              accentColor={colors.accentColor}
+            />
+          </div>
+          <div className="absolute flex flex-col justify-evenly h-full">
+            <div className="text-center text-[var(--color-text)] bg-[var(--color-bg)] p-8 border border-[var(--color-fg)] shadow-md" style={{ maxWidth: '90vw' }}>
+              <h2 className="text-3xl sm:text-5xl md:text-7xl font-bold uppercase mb-4">About</h2>
+              <p className="max-w-screen-lg mx-auto my-4 text-justify">
+                Welcome! I'm Austin Perez, a versatile developer with 4+ years of experience crafting innovative solutions
+                in Python, JavaScript, and Java. My expertise extends to C and C++, with 2+ years of proficiency, and a solid year
+                of game design and game engine development experience using Godot.
+              </p>
+              <p className="max-w-screen-lg mx-auto my-4 text-justify">
+                I thrive at the intersection of creativity and technology, applying a blend of technical expertise and an
+                entrepreneurial mindset to solve real-world problems. With a passion for turning ideas into impactful projects,
+                I bring both innovative thinking and a results-driven approach to everything I do.
+              </p>
+            </div>
+            <div className="text-center text-[var(--color-text)] bg-[var(--color-bg)] p-8 border border-[var(--color-fg)] shadow-md" style={{ maxWidth: '90vw' }}>
+              <h2 className="text-3xl sm:text-5xl md:text-7xl font-bold uppercase mb-4">Qualifications</h2>
+              <p className="max-w-screen-lg mx-auto my-4 text-justify">
+                I hold a Bachelor’s degree in Computer Science and am currently pursuing a Master’s in Computer Science at a
+                top 20 university. My academic journey has equipped me with a strong foundation in algorithmic thinking,
+                software design, and advanced programming concepts.
+              </p>
+              <p className="max-w-screen-lg mx-auto my-4 text-justify">
+                Professionally, I have over four years of experience working with Python, JavaScript, and Java, along with
+                2+ years of expertise in C and C++. I also have a year of hands-on experience in game design and game engine
+                development, specifically using Godot, where I combined creativity and technical skills to create engaging
+                interactive experiences.
+              </p>
+            </div>
+          </div>
+
+        </section>
 
 
         <section id="work" className="relative flex flex-col items-center justify-center border-b border-[var(--color-fg)]">
-        <div className="w-full h-full">
-          <WorkSection
-            primaryColor={colors.primaryColor}
-            accentColor={colors.accentColor}
-          />
-        </div>
-        <div className="absolute text-center text-[var(--color-text)] bg-[var(--color-bg)] p-8 border border-[var(--color-fg)]  shadow-md" style={{maxWidth: '90vw'}}>
-          <h2 className="text-3xl sm:text-5xl md:text-7xl font-bold uppercase mb-4">Work</h2>
-          <p className="max-w-prose mx-auto my-4 text-justify">
-            My professional journey spans a variety of projects across web and mobile development, highlighting my ability to adapt to new challenges and deliver results. Whether building intuitive applications, scaling infrastructure for startups, or creating innovative user experiences, I bring technical expertise and a problem-solving mindset to every project.
-          </p>
-          <p className="max-w-prose mx-auto my-4 text-justify">
-            Alongside my professional work, I actively explore game development and modding, which fuels my creativity and hones my technical skills. These side projects reflect my commitment to learning and experimenting with cutting-edge technologies.
-          </p>
-        </div>
+          <div className="w-full h-full">
+            <WorkSection
+              primaryColor={colors.primaryColor}
+              accentColor={colors.accentColor}
+            />
+          </div>
+          <div className="absolute flex flex-col justify-evenly h-full">
+            <div className="text-center text-[var(--color-text)] bg-[var(--color-bg)] p-8 border border-[var(--color-fg)] shadow-md" style={{ width: '92vw' }}>
+              <h2 className="text-3xl sm:text-5xl md:text-7xl font-bold uppercase mb-4">Work</h2>
+              <p className="mx-auto my-4 text-justify">
+                I have 4+ years of experience in web, mobile, and game development, specializing in Python, JavaScript, and Java, with 2+ years in C/C++. My professional background includes building scalable applications, designing efficient APIs, and solving complex technical challenges. In addition, I have a year of game development experience using Godot, where I merged creativity and technology to create engaging interactive experiences.
+              </p>
+            </div>
+            <div className="flex flex-row justify-center" style={{ gap: '1vw' }}>
+              <div className="text-center text-[var(--color-text)] bg-[var(--color-bg)] p-8 border border-[var(--color-fg)] shadow-md" style={{ width: '30vw' }}>
+                <h2 className="text-2xl sm:text-4xl md:text-5xl font-bold uppercase mb-4">Startup Experience</h2>
+                <p className="mx-auto my-4 text-justify">
+                  At a startup, I contributed to scaling web and mobile applications by implementing modular front-end components using React Native and integrating RESTful APIs. I also optimized app performance and improved reliability for thousands of users. This experience sharpened my ability to work in fast-paced environments and adapt to evolving challenges.
+                </p>
+              </div>
+              <div className="text-center text-[var(--color-text)] bg-[var(--color-bg)] p-8 border border-[var(--color-fg)] shadow-md" style={{ width: '30vw' }}>
+                <h2 className="text-2xl sm:text-4xl md:text-5xl font-bold uppercase mb-4">Entrepreneurship</h2>
+                <p className="mx-auto my-4 text-justify">
+                  I founded and developed a secondhand clothing app that blends fashion inspiration with a marketplace. I led the development of features like a personalized content algorithm, shipping and payment systems, and a responsive UI/UX design using React Native and MongoDB. This role demonstrated my ability to take an idea from concept to execution, delivering a seamless user experience.
+                </p>
+              </div>
+              <div className="text-center text-[var(--color-text)] bg-[var(--color-bg)] p-8 border border-[var(--color-fg)] shadow-md" style={{ width: '30vw' }}>
+                <h2 className="text-2xl sm:text-4xl md:text-5xl font-bold uppercase mb-4">Freelance Work</h2>
+                <p className="mx-auto my-4 text-justify">
+                  As a freelance developer, I delivered tailored software solutions for a diverse range of clients, including e-commerce platforms and custom web tools. I worked across the full development lifecycle, from gathering requirements to deployment, leveraging Python, JavaScript, and Java to meet client needs. Freelancing honed my skills in communication, time management, and adaptability.
+                </p>
+              </div>
+            </div>
+          </div>
         </section>
 
+
+
+
         <section id="contact" className="relative flex flex-col items-center justify-center border-b border-[var(--color-fg)]">
-        <div className="w-full h-full">
-          <ContactSection
-            primaryColor={colors.primaryColor}
-            accentColor={colors.accentColor}
-          />
-        </div>
-        <div className="absolute text-center text-[var(--color-text)] bg-[var(--color-bg)] p-8 border border-[var(--color-fg)]  shadow-md" style={{maxWidth: '90vw'}}>
-          <h2 className="text-3xl sm:text-5xl md:text-7xl font-bold uppercase mb-4">Contact Me</h2>
-          <p className="max-w-prose mx-auto my-4 text-justify">
-            I’m always open to connecting with like-minded professionals, collaborating on impactful projects, or discussing exciting opportunities. Let’s create something extraordinary together.
-          </p>
-          <p className="max-w-prose mx-auto my-4 text-justify">
-            Email: <a href="mailto:austin@example.com" className="underline">austinp0502@gmail.com</a>
-          </p>
-          <p className="max-w-prose mx-auto my-4 text-justify">
-            Or send me a message on <a href="https://linkedin.com/in/austin-m-perez" className="underline">LinkedIn</a>.
-          </p>
-        </div>
+          <div className="w-full h-full">
+            <ContactSection
+              primaryColor={colors.primaryColor}
+              accentColor={colors.accentColor}
+            />
+          </div>
+          <div className="absolute text-center text-[var(--color-text)] bg-[var(--color-bg)] p-8 border border-[var(--color-fg)]  shadow-md" style={{ maxWidth: '90vw' }}>
+            <h2 className="text-3xl sm:text-5xl md:text-7xl font-bold uppercase mb-4">Contact Me</h2>
+            <p className="max-w-screen-lg mx-auto my-4 text-justify">
+              I’m always open to connecting with like-minded professionals, collaborating on impactful projects, or discussing exciting opportunities. Let’s create something extraordinary together.
+            </p>
+            <p className="max-w-screen-lg mx-auto my-4 text-justify">
+              Email: <a href="mailto:austin@example.com" className="underline">austinp0502@gmail.com</a>
+            </p>
+            <p className="max-w-screen-lg mx-auto my-4 text-justify">
+              Or send me a message on <a href="https://linkedin.com/in/austin-m-perez" className="underline">LinkedIn</a>.
+            </p>
+          </div>
         </section>
 
         <section id="extras" className="relative flex flex-col items-center justify-center border-b border-[var(--color-fg)]">
-        <div className="w-full h-full">
-          <ExtraSection
-            primaryColor={colors.primaryColor}
-            accentColor={colors.accentColor}
-          />
-        </div>
-        <div className="absolute text-center text-[var(--color-text)] bg-[var(--color-bg)] p-8 border border-[var(--color-fg)]  shadow-md" style={{maxWidth: '90vw'}}>
-          <h2 className="text-3xl sm:text-5xl md:text-7xl font-bold uppercase mb-4">Extras</h2>
-          <p className="max-w-prose mx-auto my-4 text-justify">
-            Beyond client work, I’ve delved into game development and modding, which allows me to combine technical rigor with creative expression. These projects not only refine my programming skills but also demonstrate my ability to work on complex, highly engaging systems.
-          </p>
-          <p className="max-w-prose mx-auto my-4 text-justify">
-            Take a look at my <a href="https://github.com/AMPerez04" className="underline">GitHub</a> to explore my experiments, or check out my <a href="https://linkedin.com/in/austin-m-perez" className="underline">LinkedIn</a> for more about my professional journey.
-          </p>
-        </div>
+          <div className="w-full h-full">
+            <ExtraSection
+              primaryColor={colors.primaryColor}
+              accentColor={colors.accentColor}
+            />
+          </div>
+          <div className="absolute text-center text-[var(--color-text)] bg-[var(--color-bg)] p-8 border border-[var(--color-fg)]  shadow-md" style={{ maxWidth: '90vw' }}>
+            <h2 className="text-3xl sm:text-5xl md:text-7xl font-bold uppercase mb-4">Extras</h2>
+            <p className="max-w-screen-lg mx-auto my-4 text-justify">
+              Beyond client work, I’ve delved into game development and modding, which allows me to combine technical rigor with creative expression. These projects not only refine my programming skills but also demonstrate my ability to work on complex, highly engaging systems.
+            </p>
+            <p className="max-w-screen-lg mx-auto my-4 text-justify">
+              Take a look at my <a href="https://github.com/AMPerez04" className="underline">GitHub</a> to explore my experiments, or check out my <a href="https://linkedin.com/in/austin-m-perez" className="underline">LinkedIn</a> for more about my professional journey.
+            </p>
+          </div>
         </section>
       </main>
 
