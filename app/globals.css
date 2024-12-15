@@ -92,8 +92,51 @@ body::-webkit-scrollbar {
   color: var(--color-bg);
 }
 
+.horizontal-list {
+  display: flex;
+  gap: 1rem;
+  flex-direction: row;
+}
+
+@media (max-width: 700px) {
+  .horizontal-list {
+    flex-direction: column;
+    
+  }
+}
+
 .site-main {
   @apply flex flex-col;
+}
+
+.box {
+  max-width: 50vw;
+  padding: 2rem;
+}
+
+@media (max-width: 700px) {
+  .mobile-text {
+    margin-top: 0rem;
+    margin-bottom: 0rem;
+  }
+}
+@media (max-width: 700px) {
+  .box {
+    max-width: 90vw;
+    padding: 1rem;
+  }
+}
+
+.alt-box {
+  max-width: 30vw;
+  padding: 2rem;
+}
+
+@media (max-width: 700px) {
+  .alt-box {
+    max-width: 90vw;
+    padding: 1rem;
+  }
 }
 
 .site-section {

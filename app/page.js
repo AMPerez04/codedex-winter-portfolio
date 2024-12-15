@@ -213,28 +213,28 @@ export default function Home() {
               accentColor={colors.accentColor}
             />
           </div>
-          <div className="absolute flex flex-col justify-evenly h-full">
-            <div className="text-center text-[var(--color-text)] bg-[var(--color-bg)] p-8 border border-[var(--color-fg)] shadow-md" style={{ maxWidth: '90vw' }}>
-              <h2 className="text-3xl sm:text-5xl md:text-7xl font-bold uppercase mb-4">About</h2>
-              <p className="max-w-screen-lg mx-auto my-4 text-justify">
+          <div className=" absolute flex flex-col justify-evenly h-full">
+            <div className="box text-center text-[var(--color-text)] bg-[var(--color-bg)] p-8 border border-[var(--color-fg)] shadow-md"  >
+              <h2 className="text-1xl sm:text-5xl md:text-7xl font-bold uppercase mb-2">About</h2>
+              <p className="mobile-text text-xs md:text-base mx-auto my-2 text-justify">
                 Welcome! I'm Austin Perez, a versatile developer with 4+ years of experience crafting innovative solutions
                 in Python, JavaScript, and Java. My expertise extends to C and C++, with 2+ years of proficiency, and a solid year
                 of game design and game engine development experience using Godot.
               </p>
-              <p className="max-w-screen-lg mx-auto my-4 text-justify">
+              <p className="mobile-text text-xs md:text-base mx-auto my-2 text-justify">
                 I thrive at the intersection of creativity and technology, applying a blend of technical expertise and an
                 entrepreneurial mindset to solve real-world problems. With a passion for turning ideas into impactful projects,
                 I bring both innovative thinking and a results-driven approach to everything I do.
               </p>
             </div>
-            <div className="text-center text-[var(--color-text)] bg-[var(--color-bg)] p-8 border border-[var(--color-fg)] shadow-md" style={{ maxWidth: '90vw' }}>
-              <h2 className="text-3xl sm:text-5xl md:text-7xl font-bold uppercase mb-4">Qualifications</h2>
-              <p className="max-w-screen-lg mx-auto my-4 text-justify">
+            <div className="box text-center text-[var(--color-text)] bg-[var(--color-bg)] p-8 border border-[var(--color-fg)] shadow-md"  >
+              <h2 className="text-1xl sm:text-5xl md:text-7xl font-bold uppercase mb-2">Qualifications</h2>
+              <p className="mobile-text text-xs md:text-base mx-auto my-2 text-justify">
                 I hold a Bachelor’s degree in Computer Science and am currently pursuing a Master’s in Computer Science at a
                 top 20 university. My academic journey has equipped me with a strong foundation in algorithmic thinking,
                 software design, and advanced programming concepts.
               </p>
-              <p className="max-w-screen-lg mx-auto my-4 text-justify">
+              <p className="mobile-text text-xs md:text-base mx-auto my-2 text-justify">
                 Professionally, I have over four years of experience working with Python, JavaScript, and Java, along with
                 2+ years of expertise in C and C++. I also have a year of hands-on experience in game design and game engine
                 development, specifically using Godot, where I combined creativity and technical skills to create engaging
@@ -253,34 +253,35 @@ export default function Home() {
               accentColor={colors.accentColor}
             />
           </div>
-          <div className="absolute flex flex-col justify-evenly h-full">
-            <div className="text-center text-[var(--color-text)] bg-[var(--color-bg)] p-8 border border-[var(--color-fg)] shadow-md" style={{ width: '92vw' }}>
-              <h2 className="text-3xl sm:text-5xl md:text-7xl font-bold uppercase mb-4">Work</h2>
-              <p className="mx-auto my-4 text-justify">
-                I have 4+ years of experience in web, mobile, and game development, specializing in Python, JavaScript, and Java, with 2+ years in C/C++. My professional background includes building scalable applications, designing efficient APIs, and solving complex technical challenges. In addition, I have a year of game development experience using Godot, where I merged creativity and technology to create engaging interactive experiences.
+          <div className="absolute flex flex-col justify-center gap-5 items-center h-full">
+            <div className="box text-center text-[var(--color-text)] bg-[var(--color-bg)] p-6 border border-[var(--color-fg)] shadow-md">
+              <h2 className="text-lg sm:text-5xl md:text-7xl font-bold uppercase mb-3">Work</h2>
+              <p className="mobile-text text-sm md:text-base mx-auto my-1 text-justify">
+                4+ years of experience in web, mobile, and game development, with expertise in Python, JavaScript, and Java. Proficient in creating scalable apps, APIs, and interactive experiences using Godot.
               </p>
             </div>
-            <div className="flex flex-row justify-center" style={{ gap: '1vw' }}>
-              <div className="text-center text-[var(--color-text)] bg-[var(--color-bg)] p-8 border border-[var(--color-fg)] shadow-md" style={{ width: '30vw' }}>
-                <h2 className="text-2xl sm:text-4xl md:text-5xl font-bold uppercase mb-4">Startup Experience</h2>
-                <p className="mx-auto my-4 text-justify">
-                  At a startup, I contributed to scaling web and mobile applications by implementing modular front-end components using React Native and integrating RESTful APIs. I also optimized app performance and improved reliability for thousands of users. This experience sharpened my ability to work in fast-paced environments and adapt to evolving challenges.
+            <div className="flex horizontal-list justify-center" style={{ gap: '1vw' }}>
+              <div className="alt-box text-center text-[var(--color-text)] bg-[var(--color-bg)] p-6 border border-[var(--color-fg)] shadow-md">
+                <h2 className="text-lg sm:text-4xl md:text-5xl font-bold uppercase mb-3">Startup</h2>
+                <p className="mobile-text text-sm md:text-base mx-auto my-1 text-justify">
+                  Scaled web and mobile apps, built modular components, and optimized performance using AWS, React Native, and RESTful APIs in fast-paced environments.
                 </p>
               </div>
-              <div className="text-center text-[var(--color-text)] bg-[var(--color-bg)] p-8 border border-[var(--color-fg)] shadow-md" style={{ width: '30vw' }}>
-                <h2 className="text-2xl sm:text-4xl md:text-5xl font-bold uppercase mb-4">Entrepreneurship</h2>
-                <p className="mx-auto my-4 text-justify">
-                  I founded and developed a secondhand clothing app that blends fashion inspiration with a marketplace. I led the development of features like a personalized content algorithm, shipping and payment systems, and a responsive UI/UX design using React Native and MongoDB. This role demonstrated my ability to take an idea from concept to execution, delivering a seamless user experience.
+              <div className="alt-box text-center text-[var(--color-text)] bg-[var(--color-bg)] p-6 border border-[var(--color-fg)] shadow-md">
+                <h2 className="text-lg sm:text-4xl md:text-5xl font-bold uppercase mb-3">Entrepreneurship</h2>
+                <p className="mobile-text text-sm md:text-base mx-auto my-1 text-justify">
+                  Founded a secondhand clothing app with personalized algorithms, payment systems, and responsive UI/UX using React Native and MongoDB.
                 </p>
               </div>
-              <div className="text-center text-[var(--color-text)] bg-[var(--color-bg)] p-8 border border-[var(--color-fg)] shadow-md" style={{ width: '30vw' }}>
-                <h2 className="text-2xl sm:text-4xl md:text-5xl font-bold uppercase mb-4">Freelance Work</h2>
-                <p className="mx-auto my-4 text-justify">
-                  As a freelance developer, I delivered tailored software solutions for a diverse range of clients, including e-commerce platforms and custom web tools. I worked across the full development lifecycle, from gathering requirements to deployment, leveraging Python, JavaScript, and Java to meet client needs. Freelancing honed my skills in communication, time management, and adaptability.
+              <div className="alt-box text-center text-[var(--color-text)] bg-[var(--color-bg)] p-6 border border-[var(--color-fg)] shadow-md">
+                <h2 className="text-lg sm:text-4xl md:text-5xl font-bold uppercase mb-3">Freelance</h2>
+                <p className="mobile-text text-sm md:text-base mx-auto my-1 text-justify">
+                  Delivered custom software for diverse clients, managing the full lifecycle with Python, JavaScript, and Java, while honing communication and time management skills.
                 </p>
               </div>
             </div>
           </div>
+
         </section>
 
 
@@ -293,15 +294,15 @@ export default function Home() {
               accentColor={colors.accentColor}
             />
           </div>
-          <div className="absolute text-center text-[var(--color-text)] bg-[var(--color-bg)] p-8 border border-[var(--color-fg)]  shadow-md" style={{ maxWidth: '90vw' }}>
-            <h2 className="text-3xl sm:text-5xl md:text-7xl font-bold uppercase mb-4">Contact Me</h2>
-            <p className="max-w-screen-lg mx-auto my-4 text-justify">
+          <div className="box absolute text-center text-[var(--color-text)] bg-[var(--color-bg)] p-8 border border-[var(--color-fg)]  shadow-md">
+            <h2 className="text-1xl sm:text-5xl md:text-7xl font-bold uppercase mb-4">Contact Me</h2>
+            <p className="mobile-text text-xs md:text-base mx-auto my-2 text-justify">
               I’m always open to connecting with like-minded professionals, collaborating on impactful projects, or discussing exciting opportunities. Let’s create something extraordinary together.
             </p>
-            <p className="max-w-screen-lg mx-auto my-4 text-justify">
+            <p className="mobile-text text-xs md:text-base mx-auto my-2 text-justify">
               Email: <a href="mailto:austin@example.com" className="underline">austinp0502@gmail.com</a>
             </p>
-            <p className="max-w-screen-lg mx-auto my-4 text-justify">
+            <p className="mobile-text text-xs md:text-base mx-auto my-2 text-justify">
               Or send me a message on <a href="https://linkedin.com/in/austin-m-perez" className="underline">LinkedIn</a>.
             </p>
           </div>
@@ -314,12 +315,12 @@ export default function Home() {
               accentColor={colors.accentColor}
             />
           </div>
-          <div className="absolute text-center text-[var(--color-text)] bg-[var(--color-bg)] p-8 border border-[var(--color-fg)]  shadow-md" style={{ maxWidth: '90vw' }}>
-            <h2 className="text-3xl sm:text-5xl md:text-7xl font-bold uppercase mb-4">Extras</h2>
-            <p className="max-w-screen-lg mx-auto my-4 text-justify">
+          <div className="box absolute text-center text-[var(--color-text)] bg-[var(--color-bg)] p-8 border border-[var(--color-fg)]  shadow-md">
+            <h2 className="text-1xl sm:text-5xl md:text-7xl font-bold uppercase mb-4">Extras</h2>
+            <p className="mobile-text text-xs md:text-base mx-auto my-2 text-justify">
               Beyond client work, I’ve delved into game development and modding, which allows me to combine technical rigor with creative expression. These projects not only refine my programming skills but also demonstrate my ability to work on complex, highly engaging systems.
             </p>
-            <p className="max-w-screen-lg mx-auto my-4 text-justify">
+            <p className="mobile-text text-xs md:text-base mx-auto my-2 text-justify">
               Take a look at my <a href="https://github.com/AMPerez04" className="underline">GitHub</a> to explore my experiments, or check out my <a href="https://linkedin.com/in/austin-m-perez" className="underline">LinkedIn</a> for more about my professional journey.
             </p>
           </div>
