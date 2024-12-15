@@ -35,6 +35,7 @@ export default function RootLayout({ children }) {
         <link rel="icon" href="/favicon.ico" />
         <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
         <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+        <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
         <script type="application/ld+json">
           {`
           {
@@ -43,14 +44,14 @@ export default function RootLayout({ children }) {
             "name": "Austin Perez",
             "jobTitle": "Freelance Web and App Developer",
             "url": "https://austinperez.xyz/",
-            "email": "mailto:austin@example.com",
+            "email": "mailto:austinp0502@gmail.com",
             "sameAs": [
               "https://github.com/AMPerez04",
               "https://www.linkedin.com/in/austin-m-perez/"
             ],
             "worksFor": {
               "@type": "Organization",
-              "name": "Austin Perez Portfolio"
+              "name": "Austin Perez"
             }
           }
         `}
@@ -60,7 +61,7 @@ export default function RootLayout({ children }) {
           {
             "@context": "https://schema.org",
             "@type": "WebSite",
-            "name": "Austin Perez Portfolio",
+            "name": "Austin Perez Developer",
             "url": "https://austinperez.xyz/",
             "potentialAction": {
               "@type": "SearchAction",
