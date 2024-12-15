@@ -110,15 +110,15 @@ export default function Home() {
 
       <header className="fixed top-0 left-0 w-full z-50 flex items-center justify-between bg-[var(--color-bg)] border-b border-[var(--color-fg)] shadow-lg" style={{height: '6vh' }}>
         {/* Left side: Logo */}
-        <div className="logo h-full" title="AP">
-          <button className="text-4xl font-bold px-5 h-full hover:bg-[var(--color-fg)] hover:text-[var(--color-bg)]" style={{ fontFamily: 'monospace' }} onClick={() => scrollToSection('landing')}>
+        <div className="logo h-full">
+          <button className="text-2xl md:text-3xl lg:text-4xl font-bold px-5 h-full hover:bg-[var(--color-fg)] hover:text-[var(--color-bg)] whitespace-nowrap overflow-x-auto" style={{ fontFamily: 'monospace' }} onClick={() => scrollToSection('landing')}>
             AUSTIN PEREZ
           </button>
         </div>
 
         {/* Right side: Navigation and icons */}
         <div className="flex items-center gap-0 h-full">
-          <nav className="flex items-center gap-0 h-full">
+          <nav className="hidden md:flex items-center gap-0 h-full">
             <button
               className="hover:bg-[var(--color-fg)] hover:text-[var(--color-bg)] px-5   text-2xl h-full "
               onClick={() => scrollToSection('about')}
@@ -150,7 +150,7 @@ export default function Home() {
             href="https://github.com/AMPerez04"
             target="_blank"
             rel="noopener noreferrer"
-            className="text-xl text-[var(--color-text)] hover:bg-[var(--color-fg)] hover:text-[var(--color-bg)] px-5 py-5 h-full"
+            className="flex items-center justify-center text-xl text-[var(--color-text)] hover:bg-[var(--color-fg)] hover:text-[var(--color-bg)] px-5 py-5 h-full"
             title="GitHub"
           >
             <FaGithub />
@@ -161,7 +161,7 @@ export default function Home() {
             href="https://www.linkedin.com/in/austin-m-perez/"
             target="_blank"
             rel="noopener noreferrer"
-            className="text-xl text-[var(--color-text)] hover:bg-[var(--color-fg)] hover:text-[var(--color-bg)] px-5 py-5 h-full"
+            className="flex items-center justify-center text-xl text-[var(--color-text)] hover:bg-[var(--color-fg)] hover:text-[var(--color-bg)] px-5 py-5 h-full"
             title="LinkedIn"
           >
             <FaLinkedin />
@@ -170,7 +170,7 @@ export default function Home() {
           {/* Theme Toggle */}
           <button
             ref={toggleRef}
-            className="header-toggle hover:bg-[var(--color-fg)] hover:text-[var(--color-bg)] px-5 py-5 text-xl h-full"
+            className=" flex items-center justify-center header-toggle hover:bg-[var(--color-fg)] hover:text-[var(--color-bg)] px-5 py-5 text-xl h-full"
             title="Toggle Theme"
           >
             {isDarkMode ? <BsFillMoonFill /> : <BsFillSunFill />}
@@ -213,8 +213,8 @@ export default function Home() {
             accentColor={colors.accentColor}
           />
         </div>
-        <div className="absolute text-center text-[var(--color-text)] bg-[var(--color-bg)] p-8 border border-[var(--color-fg)]  shadow-md" style={{maxWidth: '50vw'}}>
-          <h2 className="text-5xl md:text-7xl font-bold uppercase mb-4">About</h2>
+        <div className="absolute text-center text-[var(--color-text)] bg-[var(--color-bg)] p-8 border border-[var(--color-fg)]  shadow-md" style={{maxWidth: '90vw'}}>
+          <h2 className="text-3xl sm:text-5xl md:text-7xl font-bold uppercase mb-4">About</h2>
           <p className="max-w-prose mx-auto my-4 text-justify">
             Welcome! I'm Austin Perez, a versatile developer with over four years
             of freelance experience, a proven track record working with startups,
@@ -235,8 +235,8 @@ export default function Home() {
             accentColor={colors.accentColor}
           />
         </div>
-        <div className="absolute text-center text-[var(--color-text)] bg-[var(--color-bg)] p-8 border border-[var(--color-fg)]  shadow-md" style={{maxWidth: '50vw'}}>
-          <h2 className="text-5xl md:text-7xl font-bold uppercase mb-4">Work</h2>
+        <div className="absolute text-center text-[var(--color-text)] bg-[var(--color-bg)] p-8 border border-[var(--color-fg)]  shadow-md" style={{maxWidth: '90vw'}}>
+          <h2 className="text-3xl sm:text-5xl md:text-7xl font-bold uppercase mb-4">Work</h2>
           <p className="max-w-prose mx-auto my-4 text-justify">
             My professional journey spans a variety of projects across web and mobile development, highlighting my ability to adapt to new challenges and deliver results. Whether building intuitive applications, scaling infrastructure for startups, or creating innovative user experiences, I bring technical expertise and a problem-solving mindset to every project.
           </p>
@@ -253,8 +253,8 @@ export default function Home() {
             accentColor={colors.accentColor}
           />
         </div>
-        <div className="absolute text-center text-[var(--color-text)] bg-[var(--color-bg)] p-8 border border-[var(--color-fg)]  shadow-md" style={{maxWidth: '50vw'}}>
-          <h2 className="text-5xl md:text-7xl font-bold uppercase mb-4">Contact Me</h2>
+        <div className="absolute text-center text-[var(--color-text)] bg-[var(--color-bg)] p-8 border border-[var(--color-fg)]  shadow-md" style={{maxWidth: '90vw'}}>
+          <h2 className="text-3xl sm:text-5xl md:text-7xl font-bold uppercase mb-4">Contact Me</h2>
           <p className="max-w-prose mx-auto my-4 text-justify">
             I’m always open to connecting with like-minded professionals, collaborating on impactful projects, or discussing exciting opportunities. Let’s create something extraordinary together.
           </p>
@@ -274,8 +274,8 @@ export default function Home() {
             accentColor={colors.accentColor}
           />
         </div>
-        <div className="absolute text-center text-[var(--color-text)] bg-[var(--color-bg)] p-8 border border-[var(--color-fg)]  shadow-md" style={{maxWidth: '50vw'}}>
-          <h2 className="text-5xl md:text-7xl font-bold uppercase mb-4">Extras</h2>
+        <div className="absolute text-center text-[var(--color-text)] bg-[var(--color-bg)] p-8 border border-[var(--color-fg)]  shadow-md" style={{maxWidth: '90vw'}}>
+          <h2 className="text-3xl sm:text-5xl md:text-7xl font-bold uppercase mb-4">Extras</h2>
           <p className="max-w-prose mx-auto my-4 text-justify">
             Beyond client work, I’ve delved into game development and modding, which allows me to combine technical rigor with creative expression. These projects not only refine my programming skills but also demonstrate my ability to work on complex, highly engaging systems.
           </p>

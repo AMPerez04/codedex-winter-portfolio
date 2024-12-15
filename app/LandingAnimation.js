@@ -12,8 +12,8 @@ export default function LandingAnimation({ primaryColor = "#000000", accentColor
       return;
     }
 
-    canvas.width = canvas.clientWidth;
-    canvas.height = canvas.clientHeight;
+    canvas.width = canvas.clientWidth * window.devicePixelRatio;
+    canvas.height = canvas.clientHeight * window.devicePixelRatio;
 
     const vertexShaderSource = `
     attribute vec2 a_position;
@@ -23,14 +23,14 @@ export default function LandingAnimation({ primaryColor = "#000000", accentColor
     uniform float u_offsetBase;
   
     const float PI = 3.141592653589793;
-    const float ANGLE = PI / 3.40; // 45 degrees in radians
+    const float ANGLE = PI / 3.4; // 45 degrees in radians
   
     void main() {
       float frequency = 60.0 + sin(u_time) * 3.0; // Modulate frequency over time
       float yOffset = u_offsetBase*1.5 + sin(a_position.x / u_resolution.x * frequency + u_time) * 20.0 + u_yOffset;
   
       // Apply wave modulation
-      vec2 position = vec2(a_position.x, a_position.y + yOffset);
+      vec2 position = vec2(a_position.x + 0.0, a_position.y + yOffset);
   
       // Rotate by 45 degrees
       vec2 rotatedPosition = vec2(
@@ -98,8 +98,8 @@ export default function LandingAnimation({ primaryColor = "#000000", accentColor
     gl.bindBuffer(gl.ARRAY_BUFFER, positionBuffer);
 
     const positions = [];
-    const numPoints = 100;
-    const width = canvas.width;
+    const numPoints = 300;
+    const width = canvas.width * 3;
 
     for (let i = 0; i < numPoints; i++) {
       positions.push((i / numPoints) * width, 0);
@@ -122,13 +122,13 @@ export default function LandingAnimation({ primaryColor = "#000000", accentColor
     const size = 2;
     gl.vertexAttribPointer(positionLocation, size, gl.FLOAT, false, 0, 0);
 
-    const numWaves = 80; // Total number of waves
-    const waveSpacing = canvas.height*2.5 / numWaves; // Distribute waves across the canvas height
+    const numWaves = 400; // Total number of waves
+    const waveSpacing = canvas.height*12.5 / numWaves; // Distribute waves across the canvas height
     // Add new uniform location for `u_offsetBase`
     const offsetBaseLocation = gl.getUniformLocation(program, "u_offsetBase");
 
     // Calculate the offset based on canvas width
-    const offsetBase = -canvas.clientWidth / 2;
+    const offsetBase = -canvas.clientWidth / 0.5;
 
 
     const render = (time) => {
@@ -159,8 +159,9 @@ export default function LandingAnimation({ primaryColor = "#000000", accentColor
   }, [primaryColor, accentColor]);
 
   return (
-    <div style={{ width: "100vw", height: "100vh", display: "flex", justifyContent: "center", alignItems: "center" }}>
-      <canvas ref={canvasRef} style={{ width: "100%", height: "100%" }} />
-    </div>
+  <div style={{ width: "100vw", height: "100vh", display: "flex", justifyContent: "center", alignItems: "center", overflow: "hidden" }}>
+    <canvas ref={canvasRef} style={{ width: "100%", height: "100%", display: "block" }} />
+  </div>
+
   );
 }

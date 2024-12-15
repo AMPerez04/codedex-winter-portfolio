@@ -32,9 +32,9 @@ export default function RainAnimation({ primaryColor = '#000000', accentColor = 
         vec2 position = a_position;
         position.y -= mod(u_time * a_speed, 1.0); // Move down
         if (position.y < -1.0) position.y += 2.0; // Reset to top when off-screen
-        v_opacity = 1.0 - ((position.y + 1.0) / 2.0); // Opacity decreases as it falls
+        v_opacity = 1.5 - ((position.y + 1.0) / 1.5); // Opacity decreases as it falls
         gl_Position = vec4(position, 0.0, 1.0);
-        gl_PointSize = 2.0;
+        gl_PointSize = 5.0;
       }
     `;
 

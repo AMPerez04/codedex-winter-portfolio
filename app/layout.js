@@ -22,6 +22,7 @@ export default function RootLayout({ children }) {
       <head>
         <title>Austin Perez - Creative Developer | Web & Mobile Solutions for Startups</title>
         <meta name="description" content="Hire Austin Perez - an experienced creative developer specializing in web and mobile solutions for startups. Let's bring your vision to life with innovative technology!" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <meta name="keywords" content="Austin Perez, freelance developer, web developer, app developer, hire Austin Perez" />
         <meta name="author" content="Austin Perez" />
         <meta property="og:title" content="Hire Austin Perez | Freelance Web and App Developer" />
