@@ -204,46 +204,65 @@ export default function Home() {
 
         <section
           id="about"
-          className="relative flex flex-col items-center justify-center border-b border-[var(--color-fg)]"
+          className="relative min-h-screen border-b border-[var(--color-fg)]"
         >
-
-          <div className="w-full h-full">
+          {/* Background Animation */}
+          <div className="absolute inset-0 z-0">
             <AboutSection
               primaryColor={colors.primaryColor}
               accentColor={colors.accentColor}
             />
           </div>
-          <div className=" absolute flex flex-col justify-evenly h-full">
-            <div className="box text-center text-[var(--color-text)] bg-[var(--color-bg)] p-8 border border-[var(--color-fg)] shadow-md"  >
-              <h2 className="text-1xl sm:text-5xl md:text-7xl font-bold uppercase mb-2">About</h2>
-              <p className="mobile-text text-xs md:text-base mx-auto my-2 text-justify">
-                Welcome! I'm Austin Perez, a versatile developer with 4+ years of experience crafting innovative solutions
-                in Python, JavaScript, and Java. My expertise extends to C and C++, with 2+ years of proficiency, and a solid year
-                of game design and game engine development experience using Godot.
+
+          {/* Foreground Content */}
+          <div className="relative z-10 flex flex-col md:flex-row items-stretch min-h-screen">
+            {/* Left Column: About */}
+            <div className="flex-1 p-6 sm:p-10 md:p-16 flex flex-col justify-center">
+              <h2 className="text-4xl sm:text-5xl md:text-6xl font-bold uppercase mb-6">
+                About
+              </h2>
+              <p className="mobile-text text-sm md:text-base my-3 text-justify">
+                Welcome! I'm Austin Perez, a versatile developer with 4+ years of
+                experience crafting innovative solutions in Python, JavaScript, and
+                Java. My expertise extends to C and C++, with 2+ years of proficiency,
+                and a solid year of game design and game engine development experience
+                using Godot.
               </p>
-              <p className="mobile-text text-xs md:text-base mx-auto my-2 text-justify">
-                I thrive at the intersection of creativity and technology, applying a blend of technical expertise and an
-                entrepreneurial mindset to solve real-world problems. With a passion for turning ideas into impactful projects,
-                I bring both innovative thinking and a results-driven approach to everything I do.
+              <p className="mobile-text text-sm md:text-base my-3 text-justify">
+                I thrive at the intersection of creativity and technology, applying a
+                blend of technical expertise and an entrepreneurial mindset to solve
+                real-world problems. With a passion for turning ideas into impactful
+                projects, I bring both innovative thinking and a results-driven
+                approach to everything I do.
               </p>
             </div>
-            <div className="box text-center text-[var(--color-text)] bg-[var(--color-bg)] p-8 border border-[var(--color-fg)] shadow-md"  >
-              <h2 className="text-1xl sm:text-5xl md:text-7xl font-bold uppercase mb-2">Qualifications</h2>
-              <p className="mobile-text text-xs md:text-base mx-auto my-2 text-justify">
-                I hold a Bachelor’s degree in Computer Science and am currently pursuing a Master’s in Computer Science at a
-                top 20 university. My academic journey has equipped me with a strong foundation in algorithmic thinking,
-                software design, and advanced programming concepts.
+
+            {/* Right Column: Qualifications */}
+            <div className="relative flex-1 p-6 sm:p-10 md:p-16 flex flex-col justify-center">
+              {/* An optional translucent overlay so text stands out */}
+              <div className="absolute inset-0 bg-[var(--color-bg)]/70 z-[-1]" />
+
+              <h2 className="text-4xl sm:text-5xl md:text-6xl font-bold uppercase mb-6">
+                Qualifications
+              </h2>
+              <p className="mobile-text text-sm md:text-base my-3 text-justify">
+                I hold a Bachelor’s degree in Computer Science and am currently pursuing
+                a Master’s in Computer Science at a top 20 university. My academic
+                journey has equipped me with a strong foundation in algorithmic
+                thinking, software design, and advanced programming concepts.
               </p>
-              <p className="mobile-text text-xs md:text-base mx-auto my-2 text-justify">
-                Professionally, I have over four years of experience working with Python, JavaScript, and Java, along with
-                2+ years of expertise in C and C++. I also have a year of hands-on experience in game design and game engine
-                development, specifically using Godot, where I combined creativity and technical skills to create engaging
-                interactive experiences.
+              <p className="mobile-text text-sm md:text-base my-3 text-justify">
+                Professionally, I have over four years of experience working with
+                Python, JavaScript, and Java, along with 2+ years of expertise in C and
+                C++. I also have a year of hands-on experience in game design and game
+                engine development, specifically using Godot, where I combined
+                creativity and technical skills to create engaging interactive
+                experiences.
               </p>
             </div>
           </div>
-
         </section>
+
 
 
         <section id="work" className="relative flex flex-col items-center justify-center border-b border-[var(--color-fg)]">
