@@ -1,215 +1,172 @@
-// src/components/InteractiveParticles.jsx
+// src/components/WorkSection.jsx
 import React, { useRef, useEffect } from "react";
+import * as THREE from "three";
+import { gsap, Power1 } from "gsap";
+import { noise } from "./perlin.js";  // Adjust the path as needed
 
-export default function WorkSection() {
+export default function WorkSection({
+  primaryColor = "#A9E7DA", // used for the background clear color and base vertex color
+  accentColor = "#23f660",  // used for the perlin mix on the vertices
+}) {
   const canvasRef = useRef(null);
-  const animationRef = useRef(null);
 
   useEffect(() => {
+    if (!noise || typeof noise.simplex3 !== "function") {
+      console.error("Perlin noise not found. Ensure perlin.js is imported correctly.");
+      return;
+    }
+
     const canvas = canvasRef.current;
-    const gl = canvas.getContext("webgl");
+    let width = canvas.offsetWidth;
+    let height = canvas.offsetHeight;
 
-    if (!gl) {
-      console.error("WebGL is not supported by your browser.");
-      return;
+    // Create renderer
+    const renderer = new THREE.WebGLRenderer({
+      canvas,
+      antialias: true,
+    });
+    renderer.setPixelRatio(window.devicePixelRatio > 1 ? 2 : 1);
+    renderer.setSize(width, height);
+    renderer.setClearColor(new THREE.Color(accentColor));
+
+    // Create scene and camera
+    const scene = new THREE.Scene();
+    const camera = new THREE.PerspectiveCamera(100, width / height, 0.1, 10000);
+    camera.position.set(120, 0, 300);
+
+    // Add lights
+    const hemiLight = new THREE.HemisphereLight(0xffffff, 0xffffff, 0.6);
+    scene.add(hemiLight);
+    const dirLight1 = new THREE.DirectionalLight(primaryColor, 2);
+    dirLight1.position.set(200, 300, 400);
+    scene.add(dirLight1);
+    const dirLight2 = dirLight1.clone();
+    dirLight2.position.set(-200, 300, 400);
+    scene.add(dirLight2);
+
+    // Create an Icosahedron geometry
+    const geometry = new THREE.IcosahedronGeometry(160, 20);
+    const posAttr = geometry.attributes.position;
+    const vertexCount = posAttr.count;
+
+    // Create an array to store vertices for tweening
+    const vertices = [];
+    for (let i = 0; i < vertexCount; i++) {
+      const v = new THREE.Vector3().fromBufferAttribute(posAttr, i);
+      // Save original position
+      v._o = v.clone();
+      vertices.push(v);
     }
 
-    // Set canvas size
-    const resizeCanvas = () => {
-      canvas.width = canvas.clientWidth;
-      canvas.height = canvas.clientHeight;
-      gl.viewport(0, 0, gl.drawingBufferWidth, gl.drawingBufferHeight);
-    };
-    resizeCanvas();
-    window.addEventListener("resize", resizeCanvas);
-
-    // Vertex Shader
-    const vertexShaderSource = `
-      attribute vec2 a_position;
-      attribute float a_lifetime;
-      varying float v_lifetime;
-      uniform float u_time;
-      uniform vec2 u_mouse;
-      uniform vec2 u_resolution;
-
-      void main() {
-        v_lifetime = mod(u_time + a_lifetime, 1.0); // Create pulsating effect
-
-        // Map lifetime to alpha for fade-in/fade-out
-        float alpha = v_lifetime < 0.5 ? v_lifetime * 2.0 : (1.0 - v_lifetime) * 2.0;
-
-        // Add motion based on lifetime and mouse proximity
-        vec2 offset = normalize(u_mouse - a_position) * (1.0 - v_lifetime) * 20.0;
-
-        vec2 position = a_position + offset * alpha;
-        vec2 zeroToOne = position / u_resolution;
-        vec2 zeroToTwo = zeroToOne * 2.0;
-        vec2 clipSpace = zeroToTwo - 1.0;
-
-        gl_Position = vec4(clipSpace * vec2(1, -1), 0, 1);
-        gl_PointSize = 5.0 * (1.0 - alpha); // Vary point size by lifetime
-      }
-    `;
-
-    // Fragment Shader
-    const fragmentShaderSource = `
-      precision highp float;
-      varying float v_lifetime;
-      uniform vec3 u_primaryColor;
-      uniform vec3 u_accentColor;
-
-      void main() {
-        float alpha = v_lifetime < 0.5 ? v_lifetime * 2.0 : (1.0 - v_lifetime) * 2.0;
-        vec3 color = mix(u_primaryColor, u_accentColor, v_lifetime);
-        gl_FragColor = vec4(color, alpha);
-      }
-    `;
-
-    // Compile shader
-    const compileShader = (gl, type, source) => {
-      const shader = gl.createShader(type);
-      gl.shaderSource(shader, source);
-      gl.compileShader(shader);
-
-      if (!gl.getShaderParameter(shader, gl.COMPILE_STATUS)) {
-        console.error("Shader compilation failed:", gl.getShaderInfoLog(shader));
-        gl.deleteShader(shader);
-        return null;
-      }
-
-      return shader;
-    };
-
-    const vertexShader = compileShader(gl, gl.VERTEX_SHADER, vertexShaderSource);
-    const fragmentShader = compileShader(gl, gl.FRAGMENT_SHADER, fragmentShaderSource);
-
-    // Link program
-    const program = gl.createProgram();
-    gl.attachShader(program, vertexShader);
-    gl.attachShader(program, fragmentShader);
-    gl.linkProgram(program);
-
-    if (!gl.getProgramParameter(program, gl.LINK_STATUS)) {
-      console.error("Program linking failed:", gl.getProgramInfoLog(program));
-      gl.deleteProgram(program);
-      return;
+    // Create a color attribute on the geometry (initialized to primaryColor)
+    const colorArray = new Float32Array(vertexCount * 3);
+    const colorPrimary = new THREE.Color(accentColor);
+    const colorAccent = new THREE.Color(primaryColor);
+    for (let i = 0; i < vertexCount; i++) {
+      colorPrimary.toArray(colorArray, i * 3);
     }
+    geometry.setAttribute("color", new THREE.BufferAttribute(colorArray, 3));
 
-    gl.useProgram(program);
-
-    // Attribute and uniform locations
-    const positionLocation = gl.getAttribLocation(program, "a_position");
-    const lifetimeLocation = gl.getAttribLocation(program, "a_lifetime");
-    const timeLocation = gl.getUniformLocation(program, "u_time");
-    const resolutionLocation = gl.getUniformLocation(program, "u_resolution");
-    const mouseLocation = gl.getUniformLocation(program, "u_mouse");
-    const primaryColorLocation = gl.getUniformLocation(program, "u_primaryColor");
-    const accentColorLocation = gl.getUniformLocation(program, "u_accentColor");
-
-    // Generate particles
-    const numParticles = 10000;
-    const positions = [];
-    const lifetimes = [];
-
-    for (let i = 0; i < numParticles; i++) {
-      positions.push(Math.random() * gl.canvas.width, Math.random() * gl.canvas.height);
-      lifetimes.push(Math.random());
-    }
-
-    // Position buffer
-    const positionBuffer = gl.createBuffer();
-    gl.bindBuffer(gl.ARRAY_BUFFER, positionBuffer);
-    gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(positions), gl.STATIC_DRAW);
-
-    // Lifetime buffer
-    const lifetimeBuffer = gl.createBuffer();
-    gl.bindBuffer(gl.ARRAY_BUFFER, lifetimeBuffer);
-    gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(lifetimes), gl.STATIC_DRAW);
-
-    // Enable position attribute
-    gl.enableVertexAttribArray(positionLocation);
-    gl.bindBuffer(gl.ARRAY_BUFFER, positionBuffer);
-    gl.vertexAttribPointer(positionLocation, 2, gl.FLOAT, false, 0, 0);
-
-    // Enable lifetime attribute
-    gl.enableVertexAttribArray(lifetimeLocation);
-    gl.bindBuffer(gl.ARRAY_BUFFER, lifetimeBuffer);
-    gl.vertexAttribPointer(lifetimeLocation, 1, gl.FLOAT, false, 0, 0);
-
-    // Convert hex color to RGB
-    const hexToRgb = (hex) => {
-      const bigint = parseInt(hex.replace("#", ""), 16);
-      const r = ((bigint >> 16) & 255) / 255;
-      const g = ((bigint >> 8) & 255) / 255;
-      const b = (bigint & 255) / 255;
-      return [r, g, b];
-    };
-
-    const root = document.documentElement;
-    const primaryColor = getComputedStyle(root).getPropertyValue("--primary-color").trim();
-    const accentColor = getComputedStyle(root).getPropertyValue("--accent-color").trim();
-
-    const [rPrimary, gPrimary, bPrimary] = hexToRgb(primaryColor);
-    const [rAccent, gAccent, bAccent] = hexToRgb(accentColor);
-
-    gl.uniform3f(primaryColorLocation, rPrimary, gPrimary, bPrimary);
-    gl.uniform3f(accentColorLocation, rAccent, gAccent, bAccent);
-
-    // Track mouse position
-    const mousePosition = { x: 0, y: 0 };
-    window.addEventListener("mousemove", (event) => {
-      const rect = canvas.getBoundingClientRect();
-      mousePosition.x = event.clientX - rect.left;
-      mousePosition.y = gl.canvas.height - (event.clientY - rect.top);
+    // Use a MeshPhongMaterial that supports vertex colors
+    const material = new THREE.MeshPhongMaterial({
+      vertexColors: true,
+      emissive: parseInt(accentColor.replace("#", "0x")),
+      emissiveIntensity: 0.4,
+      shininess: 0,
     });
 
-    // Animation loop
-    let startTime = null;
+    const shape = new THREE.Mesh(geometry, material);
+    scene.add(shape);
 
-    const render = (currentTime) => {
-      if (!startTime) startTime = currentTime;
-      const elapsedTime = (currentTime - startTime) / 1000; // in seconds
+    // Mouse vector for interactive noise
+    const mouse = new THREE.Vector2(0.8, 0.5);
 
-      if (
-        canvas.width !== canvas.clientWidth ||
-        canvas.height !== canvas.clientHeight
-      ) {
-        resizeCanvas();
+    // Update vertices and vertex colors using perlin noise
+    function updateVertices(time) {
+      for (let i = 0; i < vertices.length; i++) {
+        const vector = vertices[i];
+        // Reset to original position
+        vector.copy(vector._o);
+        // Compute noise value
+        const perlin = noise.simplex3(
+          (vector.x * 0.006) + (time * 0.0002),
+          (vector.y * 0.006) + (time * 0.0003),
+          (vector.z * 0.006)
+        );
+        // Use noise to modify the scale ratio
+        const ratio = 0.8 + perlin * 0.4 * (mouse.y + 0.1);
+        vector.multiplyScalar(ratio);
+        posAttr.setXYZ(i, vector.x, vector.y, vector.z);
+
+        // Compute a normalized t value from perlin (range 0 to 1)
+        const t = THREE.MathUtils.clamp((perlin + 1) / 2, 0, 1);
+        // Mix primary and accent colors based on t
+        const mixedColor = colorPrimary.clone().lerp(colorAccent, t);
+        mixedColor.toArray(colorArray, i * 3);
       }
+      posAttr.needsUpdate = true;
+      geometry.attributes.color.needsUpdate = true;
+    }
 
-      gl.clearColor(0, 0, 0, 0); // Transparent background
-      gl.clear(gl.COLOR_BUFFER_BIT);
+    // Render loop
+    let animationId;
+    function render(time) {
+      updateVertices(time);
+      renderer.render(scene, camera);
+      animationId = requestAnimationFrame(render);
+    }
+    animationId = requestAnimationFrame(render);
 
-      // Update uniforms
-      gl.uniform1f(timeLocation, elapsedTime);
-      gl.uniform2f(resolutionLocation, gl.canvas.width, gl.canvas.height);
-      gl.uniform2f(mouseLocation, mousePosition.x, mousePosition.y);
+    // Mouse move handler
+    function onMouseMove(e) {
+      gsap.to(mouse, {
+        duration: 0.8,
+        x: e.clientX / width,
+        y: e.clientY / height,
+        ease: Power1.easeOut,
+      });
+    }
+    window.addEventListener("mousemove", onMouseMove);
 
-      // Draw particles
-      gl.drawArrays(gl.POINTS, 0, numParticles);
+    // Handle window resize
+    function onResize() {
+      canvas.style.width = "";
+      canvas.style.height = "";
+      width = canvas.offsetWidth;
+      height = canvas.offsetHeight;
+      camera.aspect = width / height;
+      camera.updateProjectionMatrix();
+      renderer.setSize(width, height);
+    }
+    let resizeTimer;
+    function handleResize() {
+      clearTimeout(resizeTimer);
+      resizeTimer = setTimeout(onResize, 200);
+    }
+    window.addEventListener("resize", handleResize);
 
-      animationRef.current = requestAnimationFrame(render);
-    };
-
-    animationRef.current = requestAnimationFrame(render);
-
+    // Cleanup on unmount
     return () => {
-      cancelAnimationFrame(animationRef.current);
-      window.removeEventListener("resize", resizeCanvas);
-      gl.deleteProgram(program);
-      gl.deleteShader(vertexShader);
-      gl.deleteShader(fragmentShader);
-      gl.deleteBuffer(positionBuffer);
-      gl.deleteBuffer(lifetimeBuffer);
+      cancelAnimationFrame(animationId);
+      window.removeEventListener("mousemove", onMouseMove);
+      window.removeEventListener("resize", handleResize);
+      renderer.dispose();
+      geometry.dispose();
+      material.dispose();
     };
-  }, []);
+  }, [primaryColor, accentColor]);
 
   return (
-    <div style={{ width: "100vw", height: "100vh", display: "flex", justifyContent: "center", alignItems: "center" }}>
-      <canvas
-        ref={canvasRef}
-        className="absolute inset-0 w-full h-full z-0"
-      ></canvas>
+    <div
+      style={{
+        width: "100vw",
+        height: "100vh",
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+      }}
+    >
+      <canvas ref={canvasRef} className="absolute inset-0 w-full h-full z-0" />
     </div>
   );
 }

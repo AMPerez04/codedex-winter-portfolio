@@ -265,43 +265,63 @@ export default function Home() {
 
 
 
-        <section id="work" className="relative flex flex-col items-center justify-center border-b border-[var(--color-fg)]">
-          <div className="w-full h-full">
+        <section
+          id="work"
+          className="relative min-h-screen border-b border-[var(--color-fg)]"
+          style={{ color: colors.primaryColor }}
+        >
+          {/* Background Animation */}
+          <div className="absolute inset-0 z-0">
             <WorkSection
               primaryColor={colors.primaryColor}
               accentColor={colors.accentColor}
             />
           </div>
-          <div className="absolute flex flex-col justify-center gap-5 items-center h-full">
-            <div className="box text-center text-[var(--color-text)] bg-[var(--color-bg)] p-6 border border-[var(--color-fg)] shadow-md">
-              <h2 className="text-lg sm:text-5xl md:text-7xl font-bold uppercase mb-3">Work</h2>
-              <p className="mobile-text text-sm md:text-base mx-auto my-1 text-justify">
+
+          {/* Foreground Content */}
+          <div className="relative z-10 flex flex-col md:flex-row items-center justify-center min-h-screen px-4 md:px-18">
+            {/* Left Column: Work Main Info (narrower, left-aligned) */}
+            <div className="w-full md:w-1/3 p-6 sm:p-10 md:p-16 text-left">
+              <h2 className="text-4xl sm:text-5xl md:text-6xl font-bold uppercase mb-4">
+                Work
+              </h2>
+              <p className="mobile-text text-sm md:text-base my-3 text-justify ">
                 4+ years of experience in web, mobile, and game development, with expertise in Python, JavaScript, and Java. Proficient in creating scalable apps, APIs, and interactive experiences using Godot.
               </p>
             </div>
-            <div className="flex horizontal-list justify-center" style={{ gap: '1vw' }}>
-              <div className="alt-box text-center text-[var(--color-text)] bg-[var(--color-bg)] p-6 border border-[var(--color-fg)] shadow-md">
-                <h2 className="text-lg sm:text-4xl md:text-5xl font-bold uppercase mb-3">Startup</h2>
-                <p className="mobile-text text-sm md:text-base mx-auto my-1 text-justify">
+            <div style={{ width: "18%", }}>
+
+            </div>
+            {/* Right Column: Subsections */}
+            <div className="flex-1 flex flex-col gap-6">
+              <div>
+                <h3 className="text-lg sm:text-4xl md:text-5xl font-bold uppercase mb-2">
+                  Startup
+                </h3>
+                <p className="mobile-text text-sm md:text-base my-1 text-justify">
                   Scaled web and mobile apps, built modular components, and optimized performance using AWS, React Native, and RESTful APIs in fast-paced environments.
                 </p>
               </div>
-              <div className="alt-box text-center text-[var(--color-text)] bg-[var(--color-bg)] p-6 border border-[var(--color-fg)] shadow-md">
-                <h2 className="text-lg sm:text-4xl md:text-5xl font-bold uppercase mb-3">Entrepreneurship</h2>
-                <p className="mobile-text text-sm md:text-base mx-auto my-1 text-justify">
+              <div>
+                <h3 className="text-lg sm:text-4xl md:text-5xl font-bold uppercase mb-2">
+                  Entrepreneurship
+                </h3>
+                <p className="mobile-text text-sm md:text-base my-1 text-justify">
                   Founded a secondhand clothing app with personalized algorithms, payment systems, and responsive UI/UX using React Native and MongoDB.
                 </p>
               </div>
-              <div className="alt-box text-center text-[var(--color-text)] bg-[var(--color-bg)] p-6 border border-[var(--color-fg)] shadow-md">
-                <h2 className="text-lg sm:text-4xl md:text-5xl font-bold uppercase mb-3">Freelance</h2>
-                <p className="mobile-text text-sm md:text-base mx-auto my-1 text-justify">
+              <div>
+                <h3 className="text-lg sm:text-4xl md:text-5xl font-bold uppercase mb-2">
+                  Freelance
+                </h3>
+                <p className="mobile-text text-sm md:text-base my-1 text-justify">
                   Delivered custom software for diverse clients, managing the full lifecycle with Python, JavaScript, and Java, while honing communication and time management skills.
                 </p>
               </div>
             </div>
           </div>
-
         </section>
+
 
 
 
