@@ -4,7 +4,7 @@
 
 /* Set the default theme to dark */
 html {
-  @apply dark;
+  @apply light;
 }
 
 /* Shared vars */

@@ -17,10 +17,10 @@ gsap.registerPlugin(TextPlugin);
 export default function Home() {
   const toggleRef = useRef(null);
 
-  const [isDarkMode, setIsDarkMode] = useState(true); // Add state to track the current theme
+  const [isDarkMode, setIsDarkMode] = useState(false); // Add state to track the current theme
   const landingTextRef = useRef(null);
   const [colors, setColors] = useState({
-    primaryColor: '#f40c3f',
+    primaryColor: '#ffffff',
     accentColor: '#160000',
   });
 
@@ -28,7 +28,7 @@ export default function Home() {
     // Set initial theme
     const html = document.documentElement;
     if (!html.classList.contains('dark') && !html.classList.contains('light')) {
-      html.classList.add('dark');
+      html.classList.add('light');
     }
 
     // Theme Toggle
