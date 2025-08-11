@@ -1,162 +1,262 @@
-import React, { useRef, useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
 
-export default function RainAnimation({ primaryColor = '#000000', accentColor = '#00FFFF' }) {
+// Interactive particle constellation with parallax, glow, and ripple effects
+export default function ContactSection({
+  primaryColor = '#0A0A0A',
+  accentColor = '#00FFFF',
+  particleCount = 180,
+  enableInteractivity = true,
+}) {
   const canvasRef = useRef(null);
+  const rafRef = useRef(null);
 
   useEffect(() => {
     const canvas = canvasRef.current;
-    const gl = canvas.getContext('webgl');
+    if (!canvas) return;
+    const ctx = canvas.getContext('2d');
+    if (!ctx) return;
 
-    if (!gl) {
-      console.error('WebGL is not supported by your browser.');
-      return;
-    }
-
-    // Set canvas size
-    const resizeCanvas = () => {
-      canvas.width = canvas.clientWidth;
-      canvas.height = canvas.clientHeight;
-      gl.viewport(0, 0, gl.drawingBufferWidth, gl.drawingBufferHeight);
-    };
-    resizeCanvas();
-    window.addEventListener('resize', resizeCanvas);
-
-    // Vertex Shader
-    const vertexShaderSource = `
-      attribute vec2 a_position;
-      attribute float a_speed;
-      uniform float u_time;
-      varying float v_opacity;
-
-      void main() {
-        vec2 position = a_position;
-        position.y -= mod(u_time * a_speed, 1.0); // Move down
-        if (position.y < -1.0) position.y += 2.0; // Reset to top when off-screen
-        v_opacity = 1.5 - ((position.y + 1.0) / 1.5); // Opacity decreases as it falls
-        gl_Position = vec4(position, 0.0, 1.0);
-        gl_PointSize = 5.0;
-      }
-    `;
-
-    // Fragment Shader
-    const fragmentShaderSource = `
-      precision mediump float;
-      uniform vec3 u_accentColor;
-      varying float v_opacity;
-
-      void main() {
-        gl_FragColor = vec4(u_accentColor, v_opacity);
-      }
-    `;
-
-    // Compile Shader
-    const compileShader = (gl, type, source) => {
-      const shader = gl.createShader(type);
-      gl.shaderSource(shader, source);
-      gl.compileShader(shader);
-
-      if (!gl.getShaderParameter(shader, gl.COMPILE_STATUS)) {
-        console.error('Shader compilation failed:', gl.getShaderInfoLog(shader));
-        gl.deleteShader(shader);
-        return null;
-      }
-      return shader;
+    const dpr = Math.max(1, Math.min(window.devicePixelRatio || 1, 2));
+    const state = {
+      width: 0,
+      height: 0,
+      particles: [],
+      maxConnectionsPerParticle: 4,
+      baseCount: particleCount,
+      mouse: { x: null, y: null, active: false },
+      ripples: [],
+      prefersReducedMotion: window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches,
     };
 
-    const vertexShader = compileShader(gl, gl.VERTEX_SHADER, vertexShaderSource);
-    const fragmentShader = compileShader(gl, gl.FRAGMENT_SHADER, fragmentShaderSource);
-
-    // Link Program
-    const program = gl.createProgram();
-    gl.attachShader(program, vertexShader);
-    gl.attachShader(program, fragmentShader);
-    gl.linkProgram(program);
-
-    if (!gl.getProgramParameter(program, gl.LINK_STATUS)) {
-      console.error('Program linking failed:', gl.getProgramInfoLog(program));
-      gl.deleteProgram(program);
-      return;
-    }
-
-    gl.useProgram(program);
-
-    // Attribute and uniform locations
-    const positionLocation = gl.getAttribLocation(program, 'a_position');
-    const speedLocation = gl.getAttribLocation(program, 'a_speed');
-    const timeLocation = gl.getUniformLocation(program, 'u_time');
-    const accentColorLocation = gl.getUniformLocation(program, 'u_accentColor');
-
-    // Set up raindrop positions and speeds
-    const dropCount = 500; // Fewer drops for optimization
-    const positions = new Float32Array(dropCount * 2);
-    const speeds = new Float32Array(dropCount);
-    for (let i = 0; i < dropCount; i++) {
-      positions[i * 2] = (Math.random() * 2 - 1); // x (-1 to 1)
-      positions[i * 2 + 1] = (Math.random() * 2 - 1); // y (-1 to 1)
-      speeds[i] = Math.random() * 0.3 + 0.2; // Speed (0.2 to 0.5)
-    }
-
-    const positionBuffer = gl.createBuffer();
-    gl.bindBuffer(gl.ARRAY_BUFFER, positionBuffer);
-    gl.bufferData(gl.ARRAY_BUFFER, positions, gl.STATIC_DRAW);
-
-    const speedBuffer = gl.createBuffer();
-    gl.bindBuffer(gl.ARRAY_BUFFER, speedBuffer);
-    gl.bufferData(gl.ARRAY_BUFFER, speeds, gl.STATIC_DRAW);
-
-    // Enable position attribute
-    gl.bindBuffer(gl.ARRAY_BUFFER, positionBuffer);
-    gl.enableVertexAttribArray(positionLocation);
-    gl.vertexAttribPointer(positionLocation, 2, gl.FLOAT, false, 0, 0);
-
-    // Enable speed attribute
-    gl.bindBuffer(gl.ARRAY_BUFFER, speedBuffer);
-    gl.enableVertexAttribArray(speedLocation);
-    gl.vertexAttribPointer(speedLocation, 1, gl.FLOAT, false, 0, 0);
-
-    // Set rain color
+    const clamp = (val, min, max) => Math.min(Math.max(val, min), max);
+    const rand = (min, max) => Math.random() * (max - min) + min;
     const hexToRgb = (hex) => {
-      const bigint = parseInt(hex.replace('#', ''), 16);
-      const r = ((bigint >> 16) & 255) / 255;
-      const g = ((bigint >> 8) & 255) / 255;
-      const b = (bigint & 255) / 255;
-      return [r, g, b];
+      const parsed = hex.replace('#', '');
+      const bigint = parseInt(parsed.length === 3
+        ? parsed.split('').map((c) => c + c).join('')
+        : parsed, 16);
+      const r = (bigint >> 16) & 255;
+      const g = (bigint >> 8) & 255;
+      const b = bigint & 255;
+      return { r, g, b };
+    };
+    const accentRgb = hexToRgb(accentColor);
+    const primaryRgb = hexToRgb(primaryColor);
+
+    const setSize = () => {
+      const { clientWidth, clientHeight } = canvas;
+      state.width = clientWidth;
+      state.height = clientHeight;
+      canvas.width = Math.floor(clientWidth * dpr);
+      canvas.height = Math.floor(clientHeight * dpr);
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+
+      // Scale particle count with area, keep within bounds
+      const area = state.width * state.height;
+      const scale = area / (1200 * 700);
+      const target = Math.round(clamp(state.baseCount * scale, 120, 360));
+      // Add or remove particles to match target
+      if (state.particles.length < target) {
+        const toAdd = target - state.particles.length;
+        for (let i = 0; i < toAdd; i++) state.particles.push(createParticle());
+      } else if (state.particles.length > target) {
+        state.particles.length = target;
+      }
     };
 
-    const [rAccent, gAccent, bAccent] = hexToRgb(accentColor);
-    gl.uniform3f(accentColorLocation, rAccent, gAccent, bAccent);
-
-    // Animation loop
-    let startTime = null;
-    const animate = (time) => {
-      if (!startTime) startTime = time;
-      const elapsedTime = (time - startTime) / 1000.0;
-
-      gl.clearColor(...hexToRgb(primaryColor), 1.0); // Set background color
-      gl.clear(gl.COLOR_BUFFER_BIT);
-
-      gl.uniform1f(timeLocation, elapsedTime);
-
-      gl.drawArrays(gl.POINTS, 0, dropCount);
-
-      requestAnimationFrame(animate);
+    const createParticle = () => {
+      const depth = rand(0.6, 1.6); // parallax/depth factor
+      const speed = rand(0.1, 0.7) / depth;
+      const size = rand(1.2, 2.8) / Math.sqrt(depth);
+      return {
+        x: rand(0, state.width || canvas.clientWidth || 1),
+        y: rand(0, state.height || canvas.clientHeight || 1),
+        vx: rand(-speed, speed),
+        vy: rand(-speed, speed),
+        size,
+        depth,
+        twinkleOffset: Math.random() * Math.PI * 2,
+        linkCount: 0,
+      };
     };
-    requestAnimationFrame(animate);
 
-    // Cleanup
+    const drawBackground = () => {
+      // Soft radial gradient using primary color
+      const gradient = ctx.createRadialGradient(
+        state.width * 0.7,
+        state.height * 0.3,
+        50,
+        state.width * 0.5,
+        state.height * 0.5,
+        Math.max(state.width, state.height) * 0.9
+      );
+      const p = primaryRgb;
+      gradient.addColorStop(0, `rgba(${p.r}, ${p.g}, ${p.b}, 0.90)`);
+      gradient.addColorStop(1, `rgba(${p.r}, ${p.g}, ${p.b}, 1)`);
+      ctx.fillStyle = gradient;
+      ctx.fillRect(0, 0, state.width, state.height);
+    };
+
+    const update = () => {
+      for (const particle of state.particles) {
+        if (!state.prefersReducedMotion) {
+          particle.x += particle.vx;
+          particle.y += particle.vy;
+        }
+
+        // Bounce softly on edges
+        if (particle.x < 0) { particle.x = 0; particle.vx = Math.abs(particle.vx); }
+        if (particle.x > state.width) { particle.x = state.width; particle.vx = -Math.abs(particle.vx); }
+        if (particle.y < 0) { particle.y = 0; particle.vy = Math.abs(particle.vy); }
+        if (particle.y > state.height) { particle.y = state.height; particle.vy = -Math.abs(particle.vy); }
+
+        // Mouse attraction
+        if (enableInteractivity && state.mouse.active && state.mouse.x != null) {
+          const dx = state.mouse.x - particle.x;
+          const dy = state.mouse.y - particle.y;
+          const dist2 = dx * dx + dy * dy;
+          const radius = 140 * particle.depth;
+          if (dist2 < radius * radius) {
+            const force = 0.0025 / (1 + dist2);
+            particle.vx += dx * force;
+            particle.vy += dy * force;
+          }
+        }
+      }
+
+      // Ripples: outward impulse
+      state.ripples = state.ripples.filter((r) => r.alpha > 0.02);
+      for (const ripple of state.ripples) {
+        ripple.radius += ripple.speed;
+        ripple.alpha *= 0.985;
+        for (const particle of state.particles) {
+          const dx = particle.x - ripple.x;
+          const dy = particle.y - ripple.y;
+          const dist = Math.hypot(dx, dy);
+          const ring = Math.abs(dist - ripple.radius);
+          if (ring < 12) {
+            const impulse = (12 - ring) * 0.015 / particle.depth;
+            const nx = dx / (dist || 1);
+            const ny = dy / (dist || 1);
+            particle.vx += nx * impulse;
+            particle.vy += ny * impulse;
+          }
+        }
+      }
+    };
+
+    const draw = () => {
+      drawBackground();
+
+      // Lines between nearby particles
+      const maxDistance = Math.min(180, Math.max(110, Math.min(state.width, state.height) * 0.20));
+      const acc = accentRgb;
+      for (let i = 0; i < state.particles.length; i++) {
+        const a = state.particles[i];
+        a.linkCount = 0;
+      }
+      for (let i = 0; i < state.particles.length; i++) {
+        const a = state.particles[i];
+        for (let j = i + 1; j < state.particles.length; j++) {
+          const b = state.particles[j];
+          if (a.linkCount >= state.maxConnectionsPerParticle && b.linkCount >= state.maxConnectionsPerParticle) continue;
+          const dx = a.x - b.x;
+          const dy = a.y - b.y;
+          const dist2 = dx * dx + dy * dy;
+          if (dist2 < maxDistance * maxDistance) {
+            const dist = Math.sqrt(dist2);
+            const t = 1 - dist / maxDistance; // proximity factor
+            const alpha = clamp(0.08 + t * 0.22, 0.08, 0.3) * (2 / (a.depth + b.depth));
+            ctx.strokeStyle = `rgba(${acc.r}, ${acc.g}, ${acc.b}, ${alpha.toFixed(3)})`;
+            ctx.lineWidth = clamp(1 + t * 1.5, 0.75, 2.5);
+            ctx.beginPath();
+            ctx.moveTo(a.x, a.y);
+            ctx.lineTo(b.x, b.y);
+            ctx.stroke();
+            a.linkCount++;
+            b.linkCount++;
+          }
+        }
+      }
+
+      // Particles with glow and twinkle
+      ctx.shadowColor = `rgba(${acc.r}, ${acc.g}, ${acc.b}, 0.8)`;
+      for (const p of state.particles) {
+        const twinkle = 0.6 + 0.4 * Math.sin(p.twinkleOffset + performance.now() / (800 + p.depth * 600));
+        const size = p.size * twinkle;
+        ctx.shadowBlur = 8 * (2 / p.depth);
+        ctx.fillStyle = `rgba(${acc.r}, ${acc.g}, ${acc.b}, ${clamp(0.65 * twinkle, 0.35, 0.9).toFixed(3)})`;
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, size, 0, Math.PI * 2);
+        ctx.fill();
+      }
+
+      // Draw ripples
+      for (const r of state.ripples) {
+        ctx.beginPath();
+        ctx.arc(r.x, r.y, r.radius, 0, Math.PI * 2);
+        ctx.strokeStyle = `rgba(${acc.r}, ${acc.g}, ${acc.b}, ${r.alpha.toFixed(3)})`;
+        ctx.lineWidth = 2;
+        ctx.stroke();
+      }
+      ctx.shadowBlur = 0;
+    };
+
+    const frame = () => {
+      update();
+      draw();
+      rafRef.current = requestAnimationFrame(frame);
+    };
+
+    const onPointerMove = (e) => {
+      const rect = canvas.getBoundingClientRect();
+      const x = (e.touches ? e.touches[0].clientX : e.clientX) - rect.left;
+      const y = (e.touches ? e.touches[0].clientY : e.clientY) - rect.top;
+      state.mouse.x = x;
+      state.mouse.y = y;
+      state.mouse.active = true;
+    };
+    const onPointerLeave = () => { state.mouse.active = false; };
+    const onClick = (e) => {
+      if (!enableInteractivity) return;
+      const rect = canvas.getBoundingClientRect();
+      const x = (e.touches ? e.touches[0].clientX : e.clientX) - rect.left;
+      const y = (e.touches ? e.touches[0].clientY : e.clientY) - rect.top;
+      state.ripples.push({ x, y, radius: 4, alpha: 0.45, speed: 5 });
+    };
+
+    setSize();
+    // Initialize particles if empty
+    if (state.particles.length === 0) {
+      const initial = Math.round(clamp(state.baseCount, 120, 360));
+      for (let i = 0; i < initial; i++) state.particles.push(createParticle());
+    }
+
+    window.addEventListener('resize', setSize);
+    canvas.addEventListener('mousemove', onPointerMove, { passive: true });
+    canvas.addEventListener('mouseleave', onPointerLeave, { passive: true });
+    canvas.addEventListener('touchstart', onPointerMove, { passive: true });
+    canvas.addEventListener('touchmove', onPointerMove, { passive: true });
+    canvas.addEventListener('touchend', onPointerLeave, { passive: true });
+    canvas.addEventListener('click', onClick, { passive: true });
+
+    rafRef.current = requestAnimationFrame(frame);
+
     return () => {
-      window.removeEventListener('resize', resizeCanvas);
-      gl.deleteProgram(program);
-      gl.deleteShader(vertexShader);
-      gl.deleteShader(fragmentShader);
-      gl.deleteBuffer(positionBuffer);
-      gl.deleteBuffer(speedBuffer);
+      cancelAnimationFrame(rafRef.current);
+      window.removeEventListener('resize', setSize);
+      canvas.removeEventListener('mousemove', onPointerMove);
+      canvas.removeEventListener('mouseleave', onPointerLeave);
+      canvas.removeEventListener('touchstart', onPointerMove);
+      canvas.removeEventListener('touchmove', onPointerMove);
+      canvas.removeEventListener('touchend', onPointerLeave);
+      canvas.removeEventListener('click', onClick);
     };
-  }, [primaryColor, accentColor]);
+  }, [primaryColor, accentColor, particleCount, enableInteractivity]);
 
   return (
-    <div style={{ width: '100vw', height: '100vh' }}>
-      <canvas ref={canvasRef} className="absolute inset-0 w-full h-full z-0"></canvas>
+    <div style={{ width: '100vw', height: '100vh' }} className="relative">
+      <canvas ref={canvasRef} className="absolute inset-0 w-full h-full z-0" />
     </div>
   );
 }

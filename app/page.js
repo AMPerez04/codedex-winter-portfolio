@@ -222,7 +222,7 @@ export default function Home() {
                 About
               </h2>
               <p className="mobile-text text-sm md:text-base my-3 text-justify">
-                Welcome! I'm Austin Perez, a versatile developer with 4+ years of
+                Welcome! I`&apos;`m Austin Perez, a versatile developer with 4+ years of
                 experience crafting innovative solutions in Python, JavaScript, and
                 Java. My expertise extends to C and C++, with 2+ years of proficiency,
                 and a solid year of game design and game engine development experience
@@ -347,14 +347,14 @@ export default function Home() {
           </div>
         </section>
 
-        <section id="extras" className="relative flex flex-col items-center justify-center border-b border-[var(--color-fg)]">
+        <section id="extras" className="relative flex flex-col items-start justify-center border-b border-[var(--color-fg)]">
           <div className="w-full h-full">
             <ExtraSection
               primaryColor={colors.primaryColor}
               accentColor={colors.accentColor}
             />
           </div>
-          <div className="box absolute text-center text-[var(--color-text)] bg-[var(--color-bg)] p-8 border border-[var(--color-fg)]  shadow-md">
+          <div className="box absolute bottom-6 left-6 text-left text-[var(--color-text)] bg-[var(--color-bg)]/55 backdrop-blur-sm p-4 md:p-6 rounded border border-[var(--color-fg)]/30 shadow-sm w-[92%] max-w-[680px]">
             <h2 className="text-1xl sm:text-5xl md:text-7xl font-bold uppercase mb-4">Extras</h2>
             <p className="mobile-text text-xs md:text-base mx-auto my-2 text-justify">
               Beyond client work, I’ve delved into game development and modding, which allows me to combine technical rigor with creative expression. These projects not only refine my programming skills but also demonstrate my ability to work on complex, highly engaging systems.
@@ -368,7 +368,7 @@ export default function Home() {
 
 
       <footer className="footer">
-        &copy; {new Date().getFullYear()} AP's Retro Portfolio
+        &copy; {new Date().getFullYear()} AP`&apos;`s Retro Portfolio
       </footer>
     </div>
   );
