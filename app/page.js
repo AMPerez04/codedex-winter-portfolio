@@ -214,7 +214,7 @@ export default function Home() {
         {/* ABOUT */}
         <section
           id="about"
-          className="site-section relative  max-w-screen-2xl justify-center items-center"
+          className="site-section relative w-full max-w-screen-2xl justify-center items-center"
         >
           <div className=" px-6 md:px-10 justify-center items-center">
             <h2 className="section-title">About</h2>
@@ -266,48 +266,48 @@ export default function Home() {
 
               <div className="skills flex justify-center md:min-w-1/2 w-full">
                 <div className="skills-row flex flex-col justify-center">
-                  <div className="skill-item relative flex flex-col items-center justify-evenly h-28 w-40 border-2 border-[var(--color-border)] rounded-lg transition-colors duration-200 hover:bg-[var(--color-accent)] hover:text-[var(--color-text)] hover:border-[var(--color-decoration)] cursor-pointer">
-                    <SiHtml5 className="w-16 h-16 text-orange-500" />
+                  <div className="skill-item relative flex flex-col items-center justify-evenly h-20 w-28 md:w-40 md:h-28 border-2 border-[var(--color-border)] rounded-lg transition-colors duration-200 hover:bg-[var(--color-accent)] hover:text-[var(--color-text)] hover:border-[var(--color-decoration)] cursor-pointer">
+                    <SiHtml5 className="w-10 h-10 md:w-16 md:h-16 text-orange-500" />
                     <div className="skill-text">HTML</div>
                   </div>
-                  <div className="skill-item relative flex flex-col items-center justify-evenly h-28 w-40 border-2 border-[var(--color-border)] rounded-lg transition-colors duration-200 hover:bg-[var(--color-accent)] hover:text-[var(--color-text)] hover:border-[var(--color-decoration)] cursor-pointer">
-                    <SiReact className="w-16 h-16 text-sky-400" />
+                  <div className="skill-item relative flex flex-col items-center justify-evenlyh-20 w-28 md:w-40 md:h-28   border-2 border-[var(--color-border)] rounded-lg transition-colors duration-200 hover:bg-[var(--color-accent)] hover:text-[var(--color-text)] hover:border-[var(--color-decoration)] cursor-pointer">
+                    <SiReact className="w-10 h-10 md:w-16 md:h-16 text-sky-400" />
                     <div className="skill-text">REACT</div>
                   </div>
-                  <div className="skill-item relative flex flex-col items-center justify-evenly h-28 w-40 border-2 border-[var(--color-border)] rounded-lg transition-colors duration-200 hover:bg-[var(--color-accent)] hover:text-[var(--color-text)] hover:border-[var(--color-decoration)] cursor-pointer">
-                    <SiJavascript className="w-16 h-16 text-yellow-400" />
+                  <div className="skill-item relative flex flex-col items-center justify-evenly h-20 w-28 md:w-40 md:h-28 border-2 border-[var(--color-border)] rounded-lg transition-colors duration-200 hover:bg-[var(--color-accent)] hover:text-[var(--color-text)] hover:border-[var(--color-decoration)] cursor-pointer">
+                    <SiJavascript className="w-10 h-10 md:w-16 md:h-16 text-yellow-400" />
                     <div className="skill-text">JAVASCRIPT</div>
                   </div>
                 </div>
                 <div className="skills-row flex flex-col justify-center">
-                  <div className="skill-item relative flex flex-col items-center justify-evenly h-28 w-40 border-2 border-[var(--color-border)] rounded-lg transition-colors duration-200 hover:bg-[var(--color-accent)] hover:text-[var(--color-text)] hover:border-[var(--color-decoration)] cursor-pointer">
-                    <SiTypescript className="w-16 h-16 text-blue-500 " />
+                  <div className="skill-item relative flex flex-col items-center justify-evenly h-20 w-28 md:w-40 md:h-28 border-2 border-[var(--color-border)] rounded-lg transition-colors duration-200 hover:bg-[var(--color-accent)] hover:text-[var(--color-text)] hover:border-[var(--color-decoration)] cursor-pointer">
+                    <SiTypescript className="w-10 h-10 md:w-16 md:h-16 text-blue-500 " />
                     <div className="skill-text">TYPESCRIPT</div>
                   </div>
-                  <div className="skill-item relative flex flex-col items-center justify-evenly h-28 w-40 border-2 border-[var(--color-border)] rounded-lg transition-colors duration-200 hover:bg-[var(--color-accent)] hover:text-[var(--color-text)] hover:border-[var(--color-decoration)] cursor-pointer">
-                    <SiPython className="w-16 h-16 text-blue-400 " />
+                  <div className="skill-item relative flex flex-col items-center justify-evenly h-20 w-28 md:w-40 md:h-28 border-2 border-[var(--color-border)] rounded-lg transition-colors duration-200 hover:bg-[var(--color-accent)] hover:text-[var(--color-text)] hover:border-[var(--color-decoration)] cursor-pointer">
+                    <SiPython className="w-10 h-10 md:w-16 md:h-16 text-blue-400 " />
                     <div className="skill-text">PYTHON</div>
                   </div>
-                  <div className="skill-item relative flex flex-col items-center justify-evenly h-28 w-40 border-2 border-[var(--color-border)] rounded-lg transition-colors duration-200 hover:bg-[var(--color-accent)] hover:text-[var(--color-text)] hover:border-[var(--color-decoration)] cursor-pointer">
-                    <FaDatabase className="w-16 h-16 text-indigo-400" />
+                  <div className="skill-item relative flex flex-col items-center justify-evenly h-20 w-28 md:w-40 md:h-28 border-2 border-[var(--color-border)] rounded-lg transition-colors duration-200 hover:bg-[var(--color-accent)] hover:text-[var(--color-text)] hover:border-[var(--color-decoration)] cursor-pointer">
+                    <FaDatabase className="w-10 h-10 md:w-16 md:h-16 text-indigo-400" />
                     <div className="skill-text">SQL</div>
                   </div>
-                  <div className="skill-item relative flex flex-col items-center justify-evenly h-28 w-40 border-2 border-[var(--color-border)] rounded-lg transition-colors duration-200 hover:bg-[var(--color-accent)] hover:text-[var(--color-text)] hover:border-[var(--color-decoration)] cursor-pointer">
-                    <SiCplusplus className="w-16 h-16 text-blue-700" />
+                  <div className="skill-item relative flex flex-col items-center justify-evenly h-20 w-28 md:w-40 md:h-28 border-2 border-[var(--color-border)] rounded-lg transition-colors duration-200 hover:bg-[var(--color-accent)] hover:text-[var(--color-text)] hover:border-[var(--color-decoration)] cursor-pointer">
+                    <SiCplusplus className="w-10 h-10 md:w-16 md:h-16 text-blue-700" />
                     <div className="skill-text">C++</div>
                   </div>
                 </div>
                 <div className="skills-row flex flex-col justify-center">
-                  <div className="skill-item relative flex flex-col items-center justify-evenly h-28 w-40 border-2 border-[var(--color-border)] rounded-lg transition-colors duration-200 hover:bg-[var(--color-accent)] hover:text-[var(--color-text)] hover:border-[var(--color-decoration)] cursor-pointer">
-                    <SiNodedotjs className="w-16 h-16 text-green-600" />
+                  <div className="skill-item relative flex flex-col items-center justify-evenly h-20 w-28 md:w-40 md:h-28 border-2 border-[var(--color-border)] rounded-lg transition-colors duration-200 hover:bg-[var(--color-accent)] hover:text-[var(--color-text)] hover:border-[var(--color-decoration)] cursor-pointer">
+                    <SiNodedotjs className="w-10 h-10 md:w-16 md:h-16 text-green-600" />
                     <div className="skill-text">NODE.JS</div>
                   </div>
-                  <div className="skill-item relative flex flex-col items-center justify-evenly h-28 w-40 border-2 border-[var(--color-border)] rounded-lg transition-colors duration-200 hover:bg-[var(--color-accent)] hover:text-[var(--color-text)] hover:border-[var(--color-decoration)] cursor-pointer">
-                    <SiBun className="w-16 h-16 bun-icon" />
+                  <div className="skill-item relative flex flex-col items-center justify-evenly h-20 w-28 md:w-40 md:h-28 border-2 border-[var(--color-border)] rounded-lg transition-colors duration-200 hover:bg-[var(--color-accent)] hover:text-[var(--color-text)] hover:border-[var(--color-decoration)] cursor-pointer">
+                    <SiBun className="w-10 h-10 md:w-16 md:h-16 bun-icon" />
                     <div className="skill-text">BUN</div>
                   </div>
-                  <div className="skill-item relative flex flex-col items-center justify-evenly h-28 w-40 border-2 border-[var(--color-border)] rounded-lg transition-colors duration-200 hover:bg-[var(--color-accent)] hover:text-[var(--color-text)] hover:border-[var(--color-decoration)] cursor-pointer">
-                    <SiReact className="w-16 h-16 text-sky-400" />
+                  <div className="skill-item relative flex flex-col items-center justify-evenly h-20 w-28 md:w-40 md:h-28 border-2 border-[var(--color-border)] rounded-lg transition-colors duration-200 hover:bg-[var(--color-accent)] hover:text-[var(--color-text)] hover:border-[var(--color-decoration)] cursor-pointer">
+                    <SiReact className="w-10 h-10 md:w-16 md:h-16 text-sky-400" />
                     <div className="skill-text">REACT NATIVE</div>
                   </div>
                 </div>
@@ -318,13 +318,12 @@ export default function Home() {
         </section>
 
         {/* EXPERIENCE & PROJECTS */}
-        <section
-          id="work"
-          className="site-section relative "
+        <section id="work" className="site-section relative max-w-screen-2xl w-full"
         >
-          <div className="mx-auto max-w-screen-2xl px-6 md:px-10 ">
+          <div className=" max-w-screen-2xl px-6 md:px-10 w-full">
+            <h2 className="section-title">Experience</h2>
             <div className="mb-10 flex flex-col justify-center items-center">
-              <h2 className="section-title">Experience & Projects</h2>
+
               <p className="text-sm md:text-base opacity-80 max-w-3xl">
                 A selection of my work, highlighting relevant experience.
               </p>
@@ -432,8 +431,8 @@ export default function Home() {
 
 
         {/* RESUME */}
-        <section id="resume" className="site-section relative w-full">
-          <div className="mx-auto w-full max-w-screen-xl px-6 md:px-10">
+        <section id="resume" className="site-section relative max-w-screen-2xl w-full">
+          <div className="max-w-screen-xl px-6 md:px-10 w-full">
             <h2 className="section-title">Resume</h2>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
@@ -489,8 +488,8 @@ export default function Home() {
 
 
         {/* CONTACT */}
-        <section id="contact" className="site-section relative ">
-          <div className="mx-auto max-w-screen-2xl px-6 md:px-10 text-center">
+        <section id="contact" className="site-section relative max-w-screen-2xl w-full">
+          <div className=" w-full max-w-screen-2xl px-6 md:px-10 text-center">
             <h2 className="section-title">Contact</h2>
             <p className="text-sm md:text-base opacity-90 leading-relaxed mb-8">
               Open to new opportunities, collaborations, and interesting problems. If my work resonates,
