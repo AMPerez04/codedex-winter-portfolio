@@ -6,11 +6,11 @@ import { BsFillSunFill, BsFillMoonFill } from 'react-icons/bs';
 import { gsap } from 'gsap';
 import { TextPlugin } from 'gsap/TextPlugin';
 import LandingAnimation from './LandingAnimation'; // Import the component
-import Head from 'next/head';
-import AboutSection from './AboutSection';
-import WorkSection from './WorkSection';
-import ExtraSection from './ExtraSection';
-import ContactSection from './ContactSection';
+import {
+  SiHtml5, SiReact, SiJavascript, SiTypescript, SiPython, SiCplusplus,
+  SiNodedotjs, SiBun,
+} from "react-icons/si";
+import { FaDatabase } from "react-icons/fa";
 
 gsap.registerPlugin(TextPlugin);
 
@@ -23,6 +23,7 @@ export default function Home() {
     primaryColor: '#ffffff',
     accentColor: '#160000',
   });
+  const [activeResume, setActiveResume] = useState('swe');
 
   useEffect(() => {
     // Set initial theme
@@ -41,6 +42,7 @@ export default function Home() {
         gsap.to(colors, {
           primaryColor: '#ffffff', // Light background color
           accentColor: '#160000', // Light accent color
+
           duration: 0.0,
           onUpdate: () => {
             setColors({ ...colors });
@@ -51,8 +53,8 @@ export default function Home() {
         html.classList.add('dark');
         setIsDarkMode(true); // Update state
         gsap.to(colors, {
-          primaryColor: '#f40c3f', // Dark background color
-          accentColor: '#160000', // Dark accent color
+          primaryColor: '#181818', // Dark background color
+          accentColor: '#282828', // Dark accent color
           duration: 0.0,
           onUpdate: () => {
             setColors({ ...colors });
@@ -70,7 +72,13 @@ export default function Home() {
     const textTimeline = gsap.timeline({ repeat: -1, yoyo: true, delay: 0.5 });
     textTimeline
       .to(landingTextRef.current, { text: 'AUSTIN PEREZ', duration: 1, ease: 'power2.inOut' })
-      .to(landingTextRef.current, { text: 'CREATIVE DEVELOPER', duration: 2, ease: 'power2.inOut' });
+      .to(landingTextRef.current, { text: 'SOFTWARE ENGINEER', duration: 2, ease: 'power2.inOut' })
+      .to(landingTextRef.current, { text: 'CREATIVE DEVELOPER', duration: 2, ease: 'power2.inOut' })
+      .to(landingTextRef.current, { text: 'FULL STACK ENGINEER', duration: 2, ease: 'power2.inOut' })
+      .to(landingTextRef.current, { text: 'FOUNDER', duration: 2, ease: 'power2.inOut' })
+      .to(landingTextRef.current, { text: 'AUSTIN PEREZ', duration: 2, ease: 'power2.inOut' });
+
+
 
     // Ensure landingTextRef is not empty initially
     landingTextRef.current.textContent = 'AUSTIN PEREZ';
@@ -106,12 +114,12 @@ export default function Home() {
   // transition-colors duration-300 ease-in-out
   return (
 
-    <div className="min-h-screen flex flex-col bg-[var(--color-bg)] text-[var(--color-text)]  font-mono tracking-wider">
+    <div className="min-h-screen flex flex-col bg-[var(--color-bg)] text-[var(--color-text)] tracking-wider">
 
-      <header className="fixed top-0 left-0 w-full z-50 flex items-center justify-between bg-[var(--color-bg)] border-b border-[var(--color-fg)] shadow-lg" style={{ height: '6vh' }}>
+      <header className="fixed top-0 left-0 w-full z-50 flex items-center justify-between bg-[var(--color-bg)] border-b border-[var(--color-header-border)] shadow-lg" style={{ height: '6vh' }}>
         {/* Left side: Logo */}
         <div className="logo h-full">
-          <button className="text-2xl md:text-3xl lg:text-4xl font-bold px-5 h-full hover:bg-[var(--color-fg)] hover:text-[var(--color-bg)] whitespace-nowrap overflow-x-auto" onClick={() => scrollToSection('landing')}>
+          <button className="text-2xl md:text-3xl lg:text-4xl font-bold px-5 h-full hover:bg-[var(--color-text)] hover:text-[var(--color-bg)] whitespace-nowrap overflow-x-auto" onClick={() => scrollToSection('landing')}>
             AUSTIN PEREZ
           </button>
         </div>
@@ -120,29 +128,30 @@ export default function Home() {
         <div className="flex items-center gap-0 h-full">
           <nav className="hidden md:flex items-center gap-0 h-full">
             <button
-              className="hover:bg-[var(--color-fg)] hover:text-[var(--color-bg)] px-5   text-2xl h-full "
+              className="hover:bg-[var(--color-text)] hover:text-[var(--color-bg)] px-5   text-2xl h-full "
               onClick={() => scrollToSection('about')}
             >
               About
             </button>
             <button
-              className="hover:bg-[var(--color-fg)] hover:text-[var(--color-bg)] px-5   text-2xl h-full"
+              className="hover:bg-[var(--color-text)] hover:text-[var(--color-bg)] px-5   text-2xl h-full"
               onClick={() => scrollToSection('work')}
             >
               Work
             </button>
             <button
-              className="hover:bg-[var(--color-fg)] hover:text-[var(--color-bg)] px-5   text-2xl h-full"
+              className="hover:bg-[var(--color-text)] hover:text-[var(--color-bg)] px-5  text-2xl h-full"
+              onClick={() => scrollToSection('resume')}
+            >
+              Resume
+            </button>
+            <button
+              className="hover:bg-[var(--color-text)] hover:text-[var(--color-bg)] px-5   text-2xl h-full"
               onClick={() => scrollToSection('contact')}
             >
               Contact
             </button>
-            <button
-              className="hover:bg-[var(--color-fg)] hover:text-[var(--color-bg)] px-5  text-2xl h-full"
-              onClick={() => scrollToSection('extras')}
-            >
-              Extras
-            </button>
+
           </nav>
 
           {/* GitHub Icon */}
@@ -150,7 +159,7 @@ export default function Home() {
             href="https://github.com/AMPerez04"
             target="_blank"
             rel="noopener noreferrer"
-            className="flex items-center justify-center text-xl text-[var(--color-text)] hover:bg-[var(--color-fg)] hover:text-[var(--color-bg)] px-5 py-5 h-full"
+            className="flex items-center justify-center text-xl text-[var(--color-text)] hover:bg-[var(--color-text)] hover:text-[var(--color-bg)] px-5 py-5 h-full"
             title="GitHub"
           >
             <FaGithub />
@@ -161,7 +170,7 @@ export default function Home() {
             href="https://www.linkedin.com/in/austin-m-perez/"
             target="_blank"
             rel="noopener noreferrer"
-            className="flex items-center justify-center text-xl text-[var(--color-text)] hover:bg-[var(--color-fg)] hover:text-[var(--color-bg)] px-5 py-5 h-full"
+            className="flex items-center justify-center text-xl text-[var(--color-text)] hover:bg-[var(--color-text)] hover:text-[var(--color-bg)] px-5 py-5 h-full"
             title="LinkedIn"
           >
             <FaLinkedin />
@@ -170,7 +179,7 @@ export default function Home() {
           {/* Theme Toggle */}
           <button
             ref={toggleRef}
-            className=" flex items-center justify-center header-toggle hover:bg-[var(--color-fg)] hover:text-[var(--color-bg)] px-5 py-5 text-xl h-full"
+            className=" flex items-center justify-center header-toggle hover:bg-[var(--color-text)] hover:text-[var(--color-bg)] px-5 py-5 text-xl h-full"
             title="Toggle Theme"
           >
             {isDarkMode ? <BsFillMoonFill /> : <BsFillSunFill />}
@@ -180,7 +189,7 @@ export default function Home() {
 
       <section
         id="landing"
-        className="relative flex flex-col items-center justify-center border-b border-[var(--color-fg)]"
+        className="relative flex flex-col items-center justify-center border-b border-[var(--color-header-border)]"
         style={{ minHeight: "80vh" }} // Adjust this height based on your design needs
       >
         {/* Background Animation */}
@@ -200,175 +209,316 @@ export default function Home() {
       </section>
 
 
-      <main className="site-main flex-1">
+      <main className="site-main flex-1 justify-center items-center w-full">
 
+        {/* ABOUT */}
         <section
           id="about"
-          className="relative min-h-screen border-b border-[var(--color-fg)]"
+          className="site-section relative  max-w-screen-2xl justify-center items-center"
         >
-          {/* Background Animation */}
-          <div className="absolute inset-0 z-0">
-            <AboutSection
-              primaryColor={colors.primaryColor}
-              accentColor={colors.accentColor}
-            />
-          </div>
+          <div className=" px-6 md:px-10 justify-center items-center">
+            <h2 className="section-title">About</h2>
+            <div className="flex flex-col md:flex-row gap-10 w-full justify-between">
 
-          {/* Foreground Content */}
-          <div className="relative z-10 flex flex-col md:flex-row items-stretch min-h-screen">
-            {/* Left Column: About */}
-            <div className="flex-1 p-6 sm:p-10 md:p-16 flex flex-col justify-center">
-              <h2 className="text-4xl sm:text-5xl md:text-6xl font-bold uppercase mb-6">
-                About
-              </h2>
-              <p className="mobile-text text-sm md:text-base my-3 text-justify">
-                Welcome! I`&apos;`m Austin Perez, a versatile developer with 4+ years of
-                experience crafting innovative solutions in Python, JavaScript, and
-                Java. My expertise extends to C and C++, with 2+ years of proficiency,
-                and a solid year of game design and game engine development experience
-                using Godot.
-              </p>
-              <p className="mobile-text text-sm md:text-base my-3 text-justify">
-                I thrive at the intersection of creativity and technology, applying a
-                blend of technical expertise and an entrepreneurial mindset to solve
-                real-world problems. With a passion for turning ideas into impactful
-                projects, I bring both innovative thinking and a results-driven
-                approach to everything I do.
-              </p>
-            </div>
+              <div className="md:min-w-1/2 w-full md:col-span-3">
+                <div className="flex justify-center mb-6">
+                  <img
+                    src="/img/headshot.jpg"
+                    alt="Austin Perez headshot"
+                    className="w-40 h-40 md:w-56 md:h-56 object-cover rounded-full shadow-lg border-4 border-[var(--color-border)] bg-[var(--color-bg)]"
+                    style={{ objectPosition: "center 20%" }}
+                  />
+                </div>
+                <p className="text-sm md:text-base leading-relaxed mb-4 ">
+                  I&apos;m Austin Perez, a 2x Founder and Software Engineer focused on building clean, performant
+                  software across web and mobile. I enjoy turning complex
+                  problems into simple, great experiences and shipping things that
+                  actually get used.
+                </p>
+                <p className="text-sm md:text-base leading-relaxed ">
+                  Recently I&apos;ve been working with React/React Native, Bun, and Javascript,
+                  with additional experience in C/C++ for low-level work and competetive programming in Python.
+                </p>
+                <aside className="md:col-span-2 mt-6">
+                  <div className="rounded border border-[var(--color-border)] bg-[var(--color-bg)]/60 backdrop-blur-sm p-5">
+                    <h3 className="text-xl font-bold uppercase tracking-wide mb-4">Quick facts</h3>
+                    <ul className="space-y-3 text-sm md:text-base">
+                      <li className="flex items-start justify-between gap-4 border-b border-[var(--color-border)] pb-3">
+                        <span className="opacity-80">Education</span>
+                        <span className="text-right">B.S. CS · M.S. CS (in progress)</span>
+                      </li>
+                      <li className="flex items-start justify-between gap-4 border-b border-[var(--color-border)] pb-3">
+                        <span className="opacity-80">Experience</span>
+                        <span className="text-right">2+ Professional Years · Web/Mobile/DevOps</span>
+                      </li>
+                      <li className="flex items-start justify-between gap-4 border-b border-[var(--color-border)] pb-3">
+                        <span className="opacity-80">Focus</span>
+                        <span className="text-right">Full Stack Systems · APIs · Iteration</span>
+                      </li>
+                      <li className="flex items-start justify-between gap-4">
+                        <span className="opacity-80">Currently</span>
+                        <span className="text-right">Building useful things and learning fast</span>
+                      </li>
+                    </ul>
+                  </div>
+                </aside>
+              </div>
 
-            {/* Right Column: Qualifications */}
-            <div className="relative flex-1 p-6 sm:p-10 md:p-16 flex flex-col justify-center">
-              {/* An optional translucent overlay so text stands out */}
-              <div className="absolute inset-0 bg-[var(--color-bg)]/70 z-[-1]" />
+              <div className="skills flex justify-center md:min-w-1/2 w-full">
+                <div className="skills-row flex flex-col justify-center">
+                  <div className="skill-item relative flex flex-col items-center justify-evenly h-28 w-40 border-2 border-[var(--color-border)] rounded-lg transition-colors duration-200 hover:bg-[var(--color-accent)] hover:text-[var(--color-text)] hover:border-[var(--color-decoration)] cursor-pointer">
+                    <SiHtml5 className="w-16 h-16 text-orange-500" />
+                    <div className="skill-text">HTML</div>
+                  </div>
+                  <div className="skill-item relative flex flex-col items-center justify-evenly h-28 w-40 border-2 border-[var(--color-border)] rounded-lg transition-colors duration-200 hover:bg-[var(--color-accent)] hover:text-[var(--color-text)] hover:border-[var(--color-decoration)] cursor-pointer">
+                    <SiReact className="w-16 h-16 text-sky-400" />
+                    <div className="skill-text">REACT</div>
+                  </div>
+                  <div className="skill-item relative flex flex-col items-center justify-evenly h-28 w-40 border-2 border-[var(--color-border)] rounded-lg transition-colors duration-200 hover:bg-[var(--color-accent)] hover:text-[var(--color-text)] hover:border-[var(--color-decoration)] cursor-pointer">
+                    <SiJavascript className="w-16 h-16 text-yellow-400" />
+                    <div className="skill-text">JAVASCRIPT</div>
+                  </div>
+                </div>
+                <div className="skills-row flex flex-col justify-center">
+                  <div className="skill-item relative flex flex-col items-center justify-evenly h-28 w-40 border-2 border-[var(--color-border)] rounded-lg transition-colors duration-200 hover:bg-[var(--color-accent)] hover:text-[var(--color-text)] hover:border-[var(--color-decoration)] cursor-pointer">
+                    <SiTypescript className="w-16 h-16 text-blue-500 " />
+                    <div className="skill-text">TYPESCRIPT</div>
+                  </div>
+                  <div className="skill-item relative flex flex-col items-center justify-evenly h-28 w-40 border-2 border-[var(--color-border)] rounded-lg transition-colors duration-200 hover:bg-[var(--color-accent)] hover:text-[var(--color-text)] hover:border-[var(--color-decoration)] cursor-pointer">
+                    <SiPython className="w-16 h-16 text-blue-400 " />
+                    <div className="skill-text">PYTHON</div>
+                  </div>
+                  <div className="skill-item relative flex flex-col items-center justify-evenly h-28 w-40 border-2 border-[var(--color-border)] rounded-lg transition-colors duration-200 hover:bg-[var(--color-accent)] hover:text-[var(--color-text)] hover:border-[var(--color-decoration)] cursor-pointer">
+                    <FaDatabase className="w-16 h-16 text-indigo-400" />
+                    <div className="skill-text">SQL</div>
+                  </div>
+                  <div className="skill-item relative flex flex-col items-center justify-evenly h-28 w-40 border-2 border-[var(--color-border)] rounded-lg transition-colors duration-200 hover:bg-[var(--color-accent)] hover:text-[var(--color-text)] hover:border-[var(--color-decoration)] cursor-pointer">
+                    <SiCplusplus className="w-16 h-16 text-blue-700" />
+                    <div className="skill-text">C++</div>
+                  </div>
+                </div>
+                <div className="skills-row flex flex-col justify-center">
+                  <div className="skill-item relative flex flex-col items-center justify-evenly h-28 w-40 border-2 border-[var(--color-border)] rounded-lg transition-colors duration-200 hover:bg-[var(--color-accent)] hover:text-[var(--color-text)] hover:border-[var(--color-decoration)] cursor-pointer">
+                    <SiNodedotjs className="w-16 h-16 text-green-600" />
+                    <div className="skill-text">NODE.JS</div>
+                  </div>
+                  <div className="skill-item relative flex flex-col items-center justify-evenly h-28 w-40 border-2 border-[var(--color-border)] rounded-lg transition-colors duration-200 hover:bg-[var(--color-accent)] hover:text-[var(--color-text)] hover:border-[var(--color-decoration)] cursor-pointer">
+                    <SiBun className="w-16 h-16 bun-icon" />
+                    <div className="skill-text">BUN</div>
+                  </div>
+                  <div className="skill-item relative flex flex-col items-center justify-evenly h-28 w-40 border-2 border-[var(--color-border)] rounded-lg transition-colors duration-200 hover:bg-[var(--color-accent)] hover:text-[var(--color-text)] hover:border-[var(--color-decoration)] cursor-pointer">
+                    <SiReact className="w-16 h-16 text-sky-400" />
+                    <div className="skill-text">REACT NATIVE</div>
+                  </div>
+                </div>
+              </div>
 
-              <h2 className="text-4xl sm:text-5xl md:text-6xl font-bold uppercase mb-6">
-                Qualifications
-              </h2>
-              <p className="mobile-text text-sm md:text-base my-3 text-justify">
-                I hold a Bachelor’s degree in Computer Science and am currently pursuing
-                a Master’s in Computer Science at a top 20 university. My academic
-                journey has equipped me with a strong foundation in algorithmic
-                thinking, software design, and advanced programming concepts.
-              </p>
-              <p className="mobile-text text-sm md:text-base my-3 text-justify">
-                Professionally, I have over four years of experience working with
-                Python, JavaScript, and Java, along with 2+ years of expertise in C and
-                C++. I also have a year of hands-on experience in game design and game
-                engine development, specifically using Godot, where I combined
-                creativity and technical skills to create engaging interactive
-                experiences.
-              </p>
             </div>
           </div>
         </section>
 
-
-
+        {/* EXPERIENCE & PROJECTS */}
         <section
           id="work"
-          className="relative min-h-screen border-b border-[var(--color-fg)]"
-          style={{ color: colors.primaryColor }}
+          className="site-section relative "
         >
-          {/* Background Animation */}
-          <div className="absolute inset-0 z-0">
-            <WorkSection
-              primaryColor={colors.primaryColor}
-              accentColor={colors.accentColor}
-            />
-          </div>
-
-          {/* Foreground Content */}
-          <div className="relative z-10 flex flex-col md:flex-row items-center justify-center min-h-screen px-4 md:px-18">
-            {/* Left Column: Work Main Info (narrower, left-aligned) */}
-            <div className="w-full md:w-1/3 p-6 sm:p-10 md:p-16 text-left">
-              <h2 className="text-4xl sm:text-5xl md:text-6xl font-bold uppercase mb-4">
-                Work
-              </h2>
-              <p className="mobile-text text-sm md:text-base my-3 text-justify ">
-                4+ years of experience in web, mobile, and game development, with expertise in Python, JavaScript, and Java. Proficient in creating scalable apps, APIs, and interactive experiences using Godot.
+          <div className="mx-auto max-w-screen-2xl px-6 md:px-10 ">
+            <div className="mb-10 flex flex-col justify-center items-center">
+              <h2 className="section-title">Experience & Projects</h2>
+              <p className="text-sm md:text-base opacity-80 max-w-3xl">
+                A selection of my work, highlighting relevant experience.
               </p>
             </div>
-            <div style={{ width: "18%", }}>
 
-            </div>
-            {/* Right Column: Subsections */}
-            <div className="flex-1 flex flex-col gap-6">
-              <div>
-                <h3 className="text-lg sm:text-4xl md:text-5xl font-bold uppercase mb-2">
-                  Startup
-                </h3>
-                <p className="mobile-text text-sm md:text-base my-1 text-justify">
-                  Scaled web and mobile apps, built modular components, and optimized performance using AWS, React Native, and RESTful APIs in fast-paced environments.
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 auto-rows-fr gap-6 md:gap-8">
+              <article className="group rounded border border-[var(--color-border)] hover:border-[var(--color-border)] transition-colors bg-[var(--color-bg)]/60 backdrop-blur-sm p-6 w-full md:w-[22rem] ">
+                <header className="mb-3">
+                  <h3 className="text-2xl md:text-3xl font-bold uppercase">(NDA) Software Engineer</h3>
+                  <p className="text-xs md:text-sm opacity-70">System Design · DevOps · CI/CD</p>
+                </header>
+                <p className="text-sm md:text-base leading-relaxed mb-4">
+                  Early engineer (1 of 6) building a green-field, cloud-native product from scratch.
+                  Designed and implemented robust backend systems to support scalable features and CI/CD pipelines.
                 </p>
-              </div>
-              <div>
-                <h3 className="text-lg sm:text-4xl md:text-5xl font-bold uppercase mb-2">
-                  Entrepreneurship
-                </h3>
-                <p className="mobile-text text-sm md:text-base my-1 text-justify">
-                  Founded a secondhand clothing app with personalized algorithms, payment systems, and responsive UI/UX using React Native and MongoDB.
+                <div className="flex flex-wrap gap-2 text-xs">
+                  <span className="px-2 py-1 border border-[var(--color-border)] rounded">Bun</span>
+                  <span className="px-2 py-1 border border-[var(--color-border)] rounded">React</span>
+                  <span className="px-2 py-1 border border-[var(--color-border)] rounded">AWS</span>
+                  <span className="px-2 py-1 border border-[var(--color-border)] rounded">Docker</span>
+                </div>
+              </article>
+
+              <article className="group rounded border border-[var(--color-border)] hover:border-[var(--color-border)] transition-colors bg-[var(--color-bg)]/60 backdrop-blur-sm p-6 w-full md:w-[22rem]">
+                <header className="mb-3">
+                  <h3 className="text-2xl md:text-3xl font-bold uppercase">Founder · Sports Psych App</h3>
+                  <p className="text-xs md:text-sm opacity-70">System Design · UI Architecture · Sales</p>
+                </header>
+                <p className="text-sm md:text-base leading-relaxed mb-4">
+                  Built a sports psychology app from the ground up, led engineering, won multiple VC competitions, and scaled it to active use by 30 organizations.
                 </p>
-              </div>
-              <div>
-                <h3 className="text-lg sm:text-4xl md:text-5xl font-bold uppercase mb-2">
-                  Freelance
-                </h3>
-                <p className="mobile-text text-sm md:text-base my-1 text-justify">
-                  Delivered custom software for diverse clients, managing the full lifecycle with Python, JavaScript, and Java, while honing communication and time management skills.
+                <div className="flex flex-wrap gap-2 text-xs">
+                  <span className="px-2 py-1 border border-[var(--color-border)] rounded">React</span>
+                  <span className="px-2 py-1 border border-[var(--color-border)] rounded">React Native</span>
+                  <span className="px-2 py-1 border border-[var(--color-border)] rounded">iOS and Android Development</span>
+                  <span className="px-2 py-1 border border-[var(--color-border)] rounded">PostHog</span>
+                </div>
+              </article>
+
+              <article className="group rounded border border-[var(--color-border)] hover:border-[var(--color-border)] transition-colors bg-[var(--color-bg)]/60 backdrop-blur-sm p-6 w-full md:w-[22rem]">
+                <header className="mb-3">
+                  <h3 className="text-2xl md:text-3xl font-bold uppercase">Founder · Resale App</h3>
+                  <p className="text-xs md:text-sm opacity-70">Personalization · Payments · UX</p>
+                </header>
+                <p className="text-sm md:text-base leading-relaxed mb-4">
+                  Built a secondhand marketplace with tailored recommendations, secure checkout,
+                  and a responsive design system. Led product strategy end-to-end.
                 </p>
-              </div>
+                <div className="flex flex-wrap gap-2 text-xs">
+                  <span className="px-2 py-1 border border-[var(--color-border)] rounded">React Native</span>
+                  <span className="px-2 py-1 border border-[var(--color-border)] rounded">MongoDB</span>
+                  <span className="px-2 py-1 border border-[var(--color-border)] rounded">Express</span>
+                </div>
+              </article>
+
+              <article className="group rounded border border-[var(--color-border)] hover:border-[var(--color-border)] transition-colors bg-[var(--color-bg)]/60 backdrop-blur-sm p-6 w-full md:w-[22rem]">
+                <header className="mb-3">
+                  <h3 className="text-2xl md:text-3xl font-bold uppercase">Freelance Web Designer</h3>
+                  <p className="text-xs md:text-sm opacity-70">UI/UX · Branding · Client Collaboration</p>
+                </header>
+                <p className="text-sm md:text-base leading-relaxed mb-4">
+                  Designed and developed custom websites for small businesses and individuals, focusing on modern aesthetics, responsive layouts, and seamless user experiences. Worked directly with clients to translate their vision into engaging digital products.
+                </p>
+                <div className="flex flex-wrap gap-2 text-xs">
+                  <span className="px-2 py-1 border border-[var(--color-border)] rounded">React</span>
+                  <span className="px-2 py-1 border border-[var(--color-border)] rounded">Figma</span>
+                  <span className="px-2 py-1 border border-[var(--color-border)] rounded">Tailwind CSS</span>
+                </div>
+              </article>
+
+              <article className="group rounded border border-[var(--color-border)] hover:border-[var(--color-border)] transition-colors bg-[var(--color-bg)]/60 backdrop-blur-sm p-6 w-full md:w-[22rem]">
+                <header className="mb-3">
+                  <h3 className="text-2xl md:text-3xl font-bold uppercase">Full-Stack Intern</h3>
+                  <p className="text-xs md:text-sm opacity-70">Collaboration · JavaScript · Product Development</p>
+                </header>
+                <p className="text-sm md:text-base leading-relaxed mb-4">
+                  Collaborated with startups at the Skandalaris Center, building responsive web apps with JavaScript and contributing across ideation, development, and deployment.
+                </p>
+                <div className="flex flex-wrap gap-2 text-xs">
+                  <span className="px-2 py-1 border border-[var(--color-border)] rounded">JavaScript</span>
+                  <span className="px-2 py-1 border border-[var(--color-border)] rounded">Full-Stack</span>
+                  <span className="px-2 py-1 border border-[var(--color-border)] rounded">Responsive Design</span>
+                </div>
+              </article>
+
+              <article className="group rounded border border-[var(--color-border)] hover:border-[var(--color-border)] transition-colors bg-[var(--color-bg)]/60 backdrop-blur-sm p-6 w-full md:w-[22rem]">
+                <header className="mb-3">
+                  <h3 className="text-2xl md:text-3xl font-bold uppercase"> Game Dev | Modder</h3>
+                  <p className="text-xs md:text-sm opacity-70">Community Management · Game Development · Game Modding</p>
+                </header>
+                <p className="text-sm md:text-base leading-relaxed mb-4">
+                  Shipped an indie game and created mods for existing games, reaching 30k+ downloads across all platforms.
+                </p>
+                <div className="flex flex-wrap gap-2 text-xs">
+                  <span className="px-2 py-1 border border-[var(--color-border)] rounded">Godot</span>
+                  <span className="px-2 py-1 border border-[var(--color-border)] rounded">C#</span>
+                  <span className="px-2 py-1 border border-[var(--color-border)] rounded">Java</span>
+                  <span className="px-2 py-1 border border-[var(--color-border)] rounded">Design</span>
+                </div>
+              </article>
             </div>
           </div>
         </section>
 
 
 
+        {/* RESUME */}
+        <section id="resume" className="site-section relative w-full">
+          <div className="mx-auto w-full max-w-screen-xl px-6 md:px-10">
+            <h2 className="section-title">Resume</h2>
 
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+              {/* Software Engineering */}
+              <a
+                href="/resume-swe.pdf"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="group block rounded border border-[var(--color-border)] overflow-hidden bg-[var(--color-bg)]/60 hover:shadow-lg transition-shadow"
+                aria-label="Open Software Engineering resume PDF in a new tab"
+              >
+                <figure>
+                  <div className="relative w-full aspect-[8.5/11] bg-[var(--color-bg)]">
+                    {/* thumbnail preview image of page 1 */}
+                    <img
+                      src="/img/resume-swe-preview.jpg"
+                      alt="Software Engineering resume preview"
+                      className="absolute inset-0 h-full w-full object-cover"
+                    />
+                  </div>
+                  <figcaption className="flex items-center justify-between p-3 text-sm md:text-base">
+                    <span className="font-semibold">Software Engineering</span>
+                    <span className="opacity-70 group-hover:opacity-100">Open PDF ↗</span>
+                  </figcaption>
+                </figure>
+              </a>
 
-        <section id="contact" className="relative flex flex-col items-center justify-center border-b border-[var(--color-fg)]">
-          <div className="w-full h-full">
-            <ContactSection
-              primaryColor={colors.primaryColor}
-              accentColor={colors.accentColor}
-            />
-          </div>
-          <div className="box absolute text-center text-[var(--color-text)] bg-[var(--color-bg)] p-8 border border-[var(--color-fg)]  shadow-md">
-            <h2 className="text-1xl sm:text-5xl md:text-7xl font-bold uppercase mb-4">Contact Me</h2>
-            <p className="mobile-text text-xs md:text-base mx-auto my-2 text-justify">
-              I’m always open to connecting with like-minded professionals, collaborating on impactful projects, or discussing exciting opportunities. Let’s create something extraordinary together.
-            </p>
-            <p className="mobile-text text-xs md:text-base mx-auto my-2 text-justify">
-              Email: <a href="mailto:austin@example.com" className="underline">austinp0502@gmail.com</a>
-            </p>
-            <p className="mobile-text text-xs md:text-base mx-auto my-2 text-justify">
-              Or send me a message on <a href="https://linkedin.com/in/austin-m-perez" className="underline">LinkedIn</a>.
-            </p>
+              {/* Finance */}
+              <a
+                href="/resume-finance.pdf"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="group block rounded border border-[var(--color-border)] overflow-hidden bg-[var(--color-bg)]/60 hover:shadow-lg transition-shadow"
+                aria-label="Open Finance resume PDF in a new tab"
+              >
+                <figure>
+                  <div className="relative w-full aspect-[8.5/11] bg-[var(--color-bg)]">
+                    <img
+                      src="/img/resume-finance-preview.jpg"
+                      alt="Finance resume preview"
+                      className="absolute inset-0 h-full w-full object-cover"
+                    />
+                  </div>
+                  <figcaption className="flex items-center justify-between p-3 text-sm md:text-base">
+                    <span className="font-semibold">Finance</span>
+                    <span className="opacity-70 group-hover:opacity-100">Open PDF ↗</span>
+                  </figcaption>
+                </figure>
+              </a>
+            </div>
           </div>
         </section>
 
-        <section id="extras" className="relative flex flex-col items-start justify-center border-b border-[var(--color-fg)]">
-          <div className="w-full h-full">
-            <ExtraSection
-              primaryColor={colors.primaryColor}
-              accentColor={colors.accentColor}
-            />
-          </div>
-          <div className="box absolute bottom-6 left-6 text-left text-[var(--color-text)] bg-[var(--color-bg)]/55 backdrop-blur-sm p-4 md:p-6 rounded border border-[var(--color-fg)]/30 shadow-sm w-[92%] max-w-[680px]">
-            <h2 className="text-1xl sm:text-5xl md:text-7xl font-bold uppercase mb-4">Extras</h2>
-            <p className="mobile-text text-xs md:text-base mx-auto my-2 text-justify">
-              Beyond client work, I’ve delved into game development and modding, which allows me to combine technical rigor with creative expression. These projects not only refine my programming skills but also demonstrate my ability to work on complex, highly engaging systems.
+
+        {/* CONTACT */}
+        <section id="contact" className="site-section relative ">
+          <div className="mx-auto max-w-screen-2xl px-6 md:px-10 text-center">
+            <h2 className="section-title">Contact</h2>
+            <p className="text-sm md:text-base opacity-90 leading-relaxed mb-8">
+              Open to new opportunities, collaborations, and interesting problems. If my work resonates,
+              let&apos;s talk.
             </p>
-            <p className="mobile-text text-xs md:text-base mx-auto my-2 text-justify">
-              Take a look at my <a href="https://github.com/AMPerez04" className="underline">GitHub</a> to explore my experiments, or check out my <a href="https://linkedin.com/in/austin-m-perez" className="underline">LinkedIn</a> for more about my professional journey.
-            </p>
+            <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
+              <a
+                href="mailto:austinp0502@gmail.com"
+                className="px-5 py-3 border border-[var(--color-border)] rounded hover:bg-[var(--color-fg)] hover:text-[var(--color-bg)] transition-colors"
+              >
+                Email Me
+              </a>
+              <a
+                href="https://linkedin.com/in/austin-m-perez"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="px-5 py-3 border border-[var(--color-border)] rounded hover:bg-[var(--color-fg)] hover:text-[var(--color-bg)] transition-colors"
+              >
+                Connect on LinkedIn
+              </a>
+            </div>
           </div>
         </section>
       </main>
 
 
-      <footer className="footer">
-        &copy; {new Date().getFullYear()} AP`&apos;`s Retro Portfolio
+      <footer className="border-t border-[var(--color-header-border)] py-8 text-center text-sm opacity-80">
+        &copy; {new Date().getFullYear()} Austin Perez. All rights reserved.
       </footer>
     </div>
   );
