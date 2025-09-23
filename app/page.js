@@ -245,7 +245,7 @@ export default function Home() {
                     <ul className="space-y-3 text-sm md:text-base">
                       <li className="flex items-start justify-between gap-4 border-b border-[var(--color-border)] pb-3">
                         <span className="opacity-80">Education</span>
-                        <span className="text-right">B.S. CS · M.S. CS (in progress)</span>
+                        <span className="text-right">B.S. CS + Math · M.S. CS (in progress)</span>
                       </li>
                       <li className="flex items-start justify-between gap-4 border-b border-[var(--color-border)] pb-3">
                         <span className="opacity-80">Experience</span>
@@ -270,7 +270,7 @@ export default function Home() {
                     <SiHtml5 className="w-10 h-10 md:w-16 md:h-16 text-orange-500" />
                     <div className="skill-text">HTML</div>
                   </div>
-                  <div className="skill-item relative flex flex-col items-center justify-evenlyh-20 w-28 md:w-40 md:h-28   border-2 border-[var(--color-border)] rounded-lg transition-colors duration-200 hover:bg-[var(--color-accent)] hover:text-[var(--color-text)] hover:border-[var(--color-decoration)] cursor-pointer">
+                  <div className="skill-item relative flex flex-col items-center justify-evenly w-28 md:w-40 md:h-28   border-2 border-[var(--color-border)] rounded-lg transition-colors duration-200 hover:bg-[var(--color-accent)] hover:text-[var(--color-text)] hover:border-[var(--color-decoration)] cursor-pointer">
                     <SiReact className="w-10 h-10 md:w-16 md:h-16 text-sky-400" />
                     <div className="skill-text">REACT</div>
                   </div>
@@ -370,7 +370,7 @@ export default function Home() {
                 </header>
                 <p className="text-sm md:text-base leading-relaxed mb-4">
                   Built a secondhand marketplace with tailored recommendations, secure checkout,
-                  and a responsive design system. Led product strategy end-to-end.
+                  and a responsive design system. Led product strategy end-to-end. Won a VC competition and serviced 400+ users.
                 </p>
                 <div className="flex flex-wrap gap-2 text-xs">
                   <span className="px-2 py-1 border border-[var(--color-border)] rounded">React Native</span>
