@@ -274,7 +274,7 @@ a:hover {
 
 @media (max-width: 768px) {
   .skill-text {
-      font-size: 1.0rem;
+      font-size: 0.8rem;
   }
   .skill-item:not(:last-child) {
     margin-bottom: 1rem;

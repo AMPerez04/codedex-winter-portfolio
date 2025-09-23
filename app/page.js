@@ -270,7 +270,7 @@ export default function Home() {
                     <SiHtml5 className="w-10 h-10 md:w-16 md:h-16 text-orange-500" />
                     <div className="skill-text">HTML</div>
                   </div>
-                  <div className="skill-item relative flex flex-col items-center justify-evenly w-28 md:w-40 md:h-28   border-2 border-[var(--color-border)] rounded-lg transition-colors duration-200 hover:bg-[var(--color-accent)] hover:text-[var(--color-text)] hover:border-[var(--color-decoration)] cursor-pointer">
+                  <div className="skill-item relative flex flex-col items-center justify-evenly h-20 w-28 md:w-40 md:h-28 border-2 border-[var(--color-border)] rounded-lg transition-colors duration-200 hover:bg-[var(--color-accent)] hover:text-[var(--color-text)] hover:border-[var(--color-decoration)] cursor-pointer">
                     <SiReact className="w-10 h-10 md:w-16 md:h-16 text-sky-400" />
                     <div className="skill-text">REACT</div>
                   </div>
@@ -308,7 +308,7 @@ export default function Home() {
                   </div>
                   <div className="skill-item relative flex flex-col items-center justify-evenly h-20 w-28 md:w-40 md:h-28 border-2 border-[var(--color-border)] rounded-lg transition-colors duration-200 hover:bg-[var(--color-accent)] hover:text-[var(--color-text)] hover:border-[var(--color-decoration)] cursor-pointer">
                     <SiReact className="w-10 h-10 md:w-16 md:h-16 text-sky-400" />
-                    <div className="skill-text">REACT NATIVE</div>
+                    <div className="skill-text text-center">REACT NATIVE</div>
                   </div>
                 </div>
               </div>
