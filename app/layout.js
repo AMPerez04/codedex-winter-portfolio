@@ -1,87 +1,85 @@
-import { Montserrat } from "next/font/google";
-import "./globals.css";
-import { Analytics } from "@vercel/analytics/next"
+import { Geist, Geist_Mono } from 'next/font/google';
+import { Analytics } from '@vercel/analytics/next';
+import './globals.css';
 
-const montserrat = Montserrat({
-  subsets: ["latin"],
-  variable: "--font-montserrat",
-  display: "swap",
+const geistSans = Geist({
+  subsets: ['latin'],
+  variable: '--font-geist-sans',
+  display: 'swap',
 });
 
+const geistMono = Geist_Mono({
+  subsets: ['latin'],
+  variable: '--font-geist-mono',
+  display: 'swap',
+});
 
-
-
+const title = 'Austin Perez · Software Engineer';
+const description =
+  'Software engineer at Microsoft on Windows File Explorer and founding engineer of SPARC Sports, an AI mental performance platform. I build products from zero and ship them to real users.';
 
 export const metadata = {
-  title: "Austin Perez - Creative Developer | Web & Mobile Solutions for Startups",
-  description: "Austin Perez's portfolio site. Hire Austin Perez - an experienced creative developer specializing in web and mobile solutions for startups. Let's bring your vision to life with innovative technology!",
+  metadataBase: new URL('https://austinperez.xyz'),
+  title,
+  description,
+  authors: [{ name: 'Austin Perez', url: 'https://austinperez.xyz' }],
+  alternates: { canonical: '/' },
+  openGraph: {
+    title,
+    description,
+    url: 'https://austinperez.xyz/',
+    siteName: 'Austin Perez',
+    type: 'website',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title,
+    description,
+  },
+  icons: {
+    apple: '/apple-touch-icon.png',
+  },
 };
+
+export const viewport = {
+  themeColor: [
+    { media: '(prefers-color-scheme: light)', color: '#f8f8f6' },
+    { media: '(prefers-color-scheme: dark)', color: '#0f1110' },
+  ],
+};
+
+const personJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Person',
+  name: 'Austin Perez',
+  jobTitle: 'Software Engineer',
+  url: 'https://austinperez.xyz/',
+  email: 'mailto:austinp0502@gmail.com',
+  worksFor: { '@type': 'Organization', name: 'Microsoft' },
+  alumniOf: {
+    '@type': 'CollegeOrUniversity',
+    name: 'Washington University in St. Louis',
+  },
+  sameAs: ['https://github.com/AMPerez04', 'https://www.linkedin.com/in/austin-m-perez/'],
+};
+
+// Applies a saved theme before first paint so the page never flashes.
+const themeScript = `try{var t=localStorage.getItem('theme');if(t==='light'||t==='dark')document.documentElement.dataset.theme=t}catch(e){}`;
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <head>
-        <title>Austin Perez - Creative Developer | Web & Mobile Solutions for Startups</title>
-        <meta name="description" content="Hire Austin Perez - an experienced creative developer specializing in web and mobile solutions for startups. Let's bring your vision to life with innovative technology!" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <meta name="keywords" content="Austin Perez, freelance developer, web developer, app developer, hire Austin Perez" />
-        <meta name="author" content="Austin Perez" />
-        <meta property="og:title" content="Hire Austin Perez | Freelance Web and App Developer" />
-        <meta property="og:description" content="Hire Austin Perez, a versatile freelance developer specializing in web and app development. Proven expertise in crafting impactful digital solutions." />
-        <meta property="og:url" content="https://austinperez.xyz/" />
-        <meta property="og:type" content="website" />
-        <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content="Hire Austin Perez | Freelance Web and App Developer" />
-        <meta name="twitter:description" content="Hire Austin Perez, a versatile freelance developer specializing in web and app development. Proven expertise in crafting impactful digital solutions." />
-        <link rel="icon" href="/favicon.ico" />
-        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
-        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
-        <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
-        <script type="application/ld+json">
-          {`
-          {
-            "@context": "https://schema.org",
-            "@type": "Person",
-            "name": "Austin Perez",
-            "jobTitle": "Freelance Web and App Developer",
-            "url": "https://austinperez.xyz/",
-            "email": "mailto:austinp0502@gmail.com",
-            "sameAs": [
-              "https://github.com/AMPerez04",
-              "https://www.linkedin.com/in/austin-m-perez/"
-            ],
-            "worksFor": {
-              "@type": "Organization",
-              "name": "Austin Perez"
-            }
-          }
-        `}
-        </script>
-        <script type="application/ld+json">
-          {`
-          {
-            "@context": "https://schema.org",
-            "@type": "WebSite",
-            "name": "Austin Perez Developer",
-            "url": "https://austinperez.xyz/",
-            "potentialAction": {
-              "@type": "SearchAction",
-              "target": "https://austinperez.xyz/?q={search_term_string}",
-              "query-input": "required name=search_term_string"
-            }
-          }
-        `}
-        </script>
+        <script dangerouslySetInnerHTML={{ __html: themeScript }} />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(personJsonLd) }}
+        />
       </head>
-      <body
-        className={`${montserrat.variable} antialiased`}
-      >
-        <Analytics />
+      <body className={`${geistSans.variable} ${geistMono.variable} font-sans antialiased`}>
         {children}
+        <Analytics />
       </body>
-
-
-
     </html>
   );
 }
