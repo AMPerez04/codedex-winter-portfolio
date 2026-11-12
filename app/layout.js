@@ -36,9 +36,6 @@ export const metadata = {
     title,
     description,
   },
-  icons: {
-    apple: '/apple-touch-icon.png',
-  },
 };
 
 export const viewport = {
